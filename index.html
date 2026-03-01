@@ -1,0 +1,1783 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="theme-color" content="#f0f4ed">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Danse EEAD">
+<link rel="manifest" href="data:application/json,{%22name%22:%22Groupe%20de%20Danse%20EEAD%22,%22short_name%22:%22Danse%20EEAD%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22%23f0f4ed%22,%22theme_color%22:%22%23f0f4ed%22}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Groupe de Danse — JAD EEAD</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f0f4ed;
+  --bg2:#e8ede4;
+  --bg3:#ffffff;
+  --bg4:#f7f9f5;
+  --accent:#2a5c3f;
+  --accent2:#3a7a56;
+  --accent-light:rgba(42,92,63,0.08);
+  --accent-mid:rgba(42,92,63,0.15);
+  --or:#c8962a;
+  --or-light:rgba(200,150,42,0.12);
+  --txt:#0f1a14;
+  --txt2:#5a6b60;
+  --txt3:#9aaa9f;
+  --vert:#1e8a4a;
+  --vert-light:rgba(30,138,74,0.1);
+  --rouge:#c0392b;
+  --rouge-light:rgba(192,57,43,0.1);
+  --bleu:#2563b0;
+  --bleu-light:rgba(37,99,176,0.1);
+  --card:rgba(255,255,255,0.7);
+  --card2:rgba(255,255,255,0.9);
+  --border:rgba(42,92,63,0.1);
+  --border2:rgba(42,92,63,0.06);
+  --shadow:0 4px 24px rgba(15,26,20,0.08);
+  --shadow2:0 12px 40px rgba(15,26,20,0.12);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Bricolage Grotesque',sans-serif;
+  background:var(--bg);color:var(--txt);min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-track{background:var(--bg2);}
+::-webkit-scrollbar-thumb{background:var(--accent-mid);border-radius:2px;}
+
+/* ─── MESH BG ─── */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 0% 0%, rgba(42,92,63,0.12) 0%,transparent 55%),
+    radial-gradient(ellipse 60% 50% at 100% 100%, rgba(42,92,63,0.08) 0%,transparent 55%),
+    radial-gradient(ellipse 40% 40% at 80% 10%, rgba(200,150,42,0.06) 0%,transparent 50%);
+}
+#app,#login-screen{position:relative;z-index:1;}
+
+/* ─── KEYFRAMES ─── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes float{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-14px) scale(1.02);}}
+@keyframes slideIn{from{opacity:0;transform:translateY(100%);}to{opacity:1;transform:translateY(0);}}
+
+/* ─── LOGIN ─── */
+#login-screen{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;padding:28px;overflow:hidden;
+}
+.mesh-blob{position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none;animation:float 9s ease-in-out infinite;z-index:0;}
+.mesh-blob-1{width:320px;height:320px;background:radial-gradient(circle,rgba(42,92,63,0.25),rgba(42,92,63,0.05));top:-80px;left:-80px;}
+.mesh-blob-2{width:240px;height:240px;background:radial-gradient(circle,rgba(42,92,63,0.2),transparent);bottom:-40px;right:-40px;animation-delay:4s;}
+.mesh-blob-3{width:180px;height:180px;background:radial-gradient(circle,rgba(200,150,42,0.15),transparent);top:40%;left:60%;animation-delay:7s;}
+
+.login-eyebrow{
+  font-size:0.62rem;letter-spacing:4px;text-transform:uppercase;
+  color:var(--accent);font-weight:700;margin-bottom:12px;
+  animation:fadeUp 0.5s ease both;position:relative;z-index:1;
+}
+.login-headline{
+  font-family:'Instrument Serif',serif;font-size:2.8rem;font-weight:400;
+  color:var(--txt);text-align:center;line-height:1.1;margin-bottom:8px;
+  animation:fadeUp 0.5s 0.08s ease both;position:relative;z-index:1;
+}
+.login-headline span{font-style:italic;color:var(--accent);}
+.login-desc{
+  font-size:0.75rem;color:var(--txt2);text-align:center;line-height:1.7;
+  margin-bottom:36px;max-width:260px;
+  animation:fadeUp 0.5s 0.15s ease both;position:relative;z-index:1;
+}
+/* Big mesh card like reference */
+.login-mesh-card{
+  width:200px;height:200px;border-radius:32px;
+  background:linear-gradient(135deg,rgba(42,92,63,0.3) 0%,rgba(42,92,63,0.05) 50%,rgba(200,150,42,0.1) 100%);
+  backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.4);
+  margin-bottom:28px;position:relative;z-index:1;
+  box-shadow:var(--shadow2),inset 0 1px 0 rgba(255,255,255,0.5);
+  display:flex;align-items:center;justify-content:center;
+  animation:float 6s ease-in-out infinite;
+  overflow:hidden;
+}
+.login-mesh-card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 60% at 30% 30%,rgba(255,255,255,0.4),transparent);
+}
+.login-mesh-card .card-symbol{font-size:3.5rem;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.2));}
+
+.login-card{
+  background:var(--card2);backdrop-filter:blur(30px);
+  border:1px solid rgba(255,255,255,0.8);border-radius:28px;
+  padding:28px;width:100%;max-width:340px;
+  box-shadow:var(--shadow2),inset 0 1px 0 rgba(255,255,255,0.9);
+  animation:fadeUp 0.5s 0.2s ease both;position:relative;z-index:1;
+}
+.login-card-label{font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--txt3);text-align:center;margin-bottom:18px;}
+.login-btn{
+  width:100%;padding:16px;border:none;border-radius:16px;
+  font-family:'Bricolage Grotesque',sans-serif;font-size:0.9rem;font-weight:700;
+  cursor:pointer;transition:all 0.25s;letter-spacing:0.2px;margin-top:8px;
+}
+.btn-admin{
+  background:var(--txt);color:#fff;
+  box-shadow:0 4px 16px rgba(15,26,20,0.25);
+}
+.btn-admin:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(15,26,20,0.35);}
+.btn-membre{
+  background:var(--accent);color:#fff;
+  box-shadow:0 4px 16px rgba(42,92,63,0.3);
+}
+.btn-membre:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(42,92,63,0.4);}
+.login-sep{text-align:center;color:var(--txt3);font-size:0.65rem;margin:14px 0;letter-spacing:3px;}
+.code-input{
+  width:100%;padding:14px;border:1.5px solid var(--border);border-radius:14px;
+  font-size:1rem;font-family:'Bricolage Grotesque',sans-serif;
+  margin-bottom:8px;text-align:center;letter-spacing:6px;
+  background:var(--bg4);color:var(--txt);transition:all 0.2s;
+}
+.code-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-light);}
+.code-input::placeholder{letter-spacing:2px;color:var(--txt3);}
+.sub-card{
+  background:var(--card2);backdrop-filter:blur(30px);
+  border:1px solid rgba(255,255,255,0.8);border-radius:28px;
+  padding:24px;width:100%;max-width:340px;margin-top:12px;
+  box-shadow:var(--shadow2);animation:fadeUp 0.3s ease both;
+  position:relative;z-index:1;
+}
+.sub-card h2{font-size:0.68rem;color:var(--txt2);margin-bottom:14px;text-align:center;letter-spacing:2px;text-transform:uppercase;}
+
+/* ─── HEADER ─── */
+#app{display:none;}
+header{
+  background:rgba(240,244,237,0.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border2);
+  padding:12px 16px 0;position:sticky;top:0;z-index:100;
+}
+.header-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.hd-brand{display:flex;align-items:center;gap:10px;}
+.hd-icon{
+  width:36px;height:36px;border-radius:12px;
+  background:var(--txt);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;color:#fff;font-weight:900;
+  box-shadow:0 2px 8px rgba(15,26,20,0.2);
+}
+header h1{font-family:'Instrument Serif',serif;font-size:1.05rem;color:var(--txt);font-weight:400;}
+header p{font-size:0.6rem;color:var(--txt2);margin-top:1px;}
+.role-badge{
+  background:var(--txt);color:#fff;font-size:0.58rem;
+  padding:3px 10px;border-radius:20px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+}
+.btn-logout{
+  background:transparent;border:1.5px solid var(--border);color:var(--txt2);
+  padding:5px 10px;border-radius:8px;font-size:0.68rem;cursor:pointer;
+  font-family:'Bricolage Grotesque',sans-serif;transition:all 0.2s;
+}
+.btn-logout:hover{border-color:var(--rouge);color:var(--rouge);}
+
+/* ─── NAV ─── */
+nav{display:flex;gap:4px;padding:0 0 10px;overflow-x:auto;scrollbar-width:none;}
+nav::-webkit-scrollbar{display:none;}
+nav button{
+  background:transparent;border:1.5px solid var(--border);
+  color:var(--txt2);padding:7px 14px;border-radius:20px;
+  font-family:'Bricolage Grotesque',sans-serif;font-size:0.72rem;
+  cursor:pointer;white-space:nowrap;transition:all 0.2s;font-weight:600;
+}
+nav button.active{
+  background:var(--txt);color:#fff;border-color:var(--txt);
+  box-shadow:0 2px 10px rgba(15,26,20,0.2);
+}
+nav button:not(.active):hover{border-color:var(--accent);color:var(--accent);}
+
+/* ─── SECTIONS ─── */
+section{display:none;padding:16px;animation:fadeUp 0.25s ease;}
+section.active{display:block;}
+
+/* ─── CARDS ─── */
+.card{
+  background:var(--card2);backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.8);
+  border-radius:22px;padding:18px;margin-bottom:12px;
+  box-shadow:var(--shadow);
+}
+.card-title{
+  font-family:'Instrument Serif',serif;font-size:1.05rem;
+  color:var(--txt);margin-bottom:14px;font-weight:400;
+  display:flex;align-items:center;gap:8px;
+}
+.card-title::after{content:'';flex:1;height:1px;background:var(--border2);}
+
+/* ─── STATS ─── */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
+.stat{
+  background:var(--card2);backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.8);border-radius:20px;
+  padding:16px 8px;text-align:center;
+  box-shadow:var(--shadow);transition:transform 0.2s;
+}
+.stat:hover{transform:translateY(-2px);}
+.stat .num{
+  font-family:'Instrument Serif',serif;font-size:1.8rem;
+  color:var(--accent);line-height:1;
+}
+.stat .lbl{font-size:0.57rem;color:var(--txt2);margin-top:5px;letter-spacing:0.8px;text-transform:uppercase;font-weight:600;}
+
+/* ─── FORMS ─── */
+.fg{margin-bottom:12px;}
+.fg label{display:block;font-size:0.65rem;font-weight:700;color:var(--txt2);margin-bottom:5px;letter-spacing:0.8px;text-transform:uppercase;}
+.fg input,.fg select,.fg textarea{
+  width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:14px;
+  font-family:'Bricolage Grotesque',sans-serif;font-size:0.85rem;
+  background:var(--bg4);color:var(--txt);transition:all 0.2s;
+}
+.fg input:focus,.fg select:focus,.fg textarea:focus{
+  outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-light);
+  background:#fff;
+}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+/* ─── BUTTONS ─── */
+.btn{
+  padding:12px 20px;border:none;border-radius:14px;
+  font-family:'Bricolage Grotesque',sans-serif;font-size:0.82rem;
+  font-weight:700;cursor:pointer;transition:all 0.2s;
+}
+.btn-p{background:var(--txt);color:#fff;box-shadow:0 4px 14px rgba(15,26,20,0.2);}
+.btn-p:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(15,26,20,0.3);}
+.btn-g{background:var(--accent);color:#fff;box-shadow:0 4px 14px rgba(42,92,63,0.2);}
+.btn-g:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(42,92,63,0.3);}
+.btn-d{background:var(--rouge-light);color:var(--rouge);border:1.5px solid rgba(192,57,43,0.15);font-size:0.68rem;padding:5px 10px;}
+.btn-d:hover{background:rgba(192,57,43,0.15);}
+.btn-s{background:var(--vert-light);color:var(--vert);border:1.5px solid rgba(30,138,74,0.15);}
+.btn-s:hover{background:rgba(30,138,74,0.15);}
+.btn-f{width:100%;margin-top:10px;}
+.sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.sec-hd h2{font-family:'Instrument Serif',serif;font-size:1.3rem;color:var(--txt);}
+
+/* ─── MEMBRE CARD ─── */
+.mc{
+  display:flex;align-items:center;gap:12px;
+  background:var(--card2);border:1px solid rgba(255,255,255,0.8);
+  border-radius:20px;padding:14px;margin-bottom:8px;
+  box-shadow:var(--shadow);transition:all 0.2s;
+}
+.mc:hover{transform:translateX(3px);box-shadow:var(--shadow2);}
+.av{
+  width:44px;height:44px;border-radius:14px;
+  background:var(--txt);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-weight:800;font-size:0.9rem;flex-shrink:0;
+}
+.mi{flex:1;min-width:0;}
+.mn{font-weight:700;font-size:0.88rem;color:var(--txt);}
+.md{font-size:0.67rem;color:var(--txt2);margin-top:3px;}
+.badge{font-size:0.58rem;padding:3px 9px;border-radius:20px;font-weight:700;display:inline-block;margin-top:4px;margin-right:3px;}
+.b-ok{background:var(--vert-light);color:var(--vert);}
+.b-abs{background:var(--rouge-light);color:var(--rouge);}
+.b-ret{background:var(--or-light);color:var(--or);}
+
+/* ─── SEANCES ─── */
+.sc{
+  background:var(--card2);border:1px solid rgba(255,255,255,0.8);
+  border-radius:20px;padding:14px;margin-bottom:10px;
+  border-left:4px solid var(--accent);cursor:pointer;
+  box-shadow:var(--shadow);transition:all 0.2s;
+}
+.sc:hover{transform:translateX(3px);box-shadow:var(--shadow2);}
+.pointage-row{
+  display:flex;align-items:center;padding:11px 0;
+  border-bottom:1px solid var(--border2);gap:8px;
+}
+.pnom{flex:1;font-size:0.84rem;font-weight:600;color:var(--txt);}
+.pact{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+.chk{width:17px;height:17px;cursor:pointer;accent-color:var(--rouge);}
+.chk-ret{accent-color:var(--or);}
+.ci{
+  width:78px;padding:6px 8px;border:1.5px solid var(--border);border-radius:10px;
+  font-size:0.76rem;text-align:center;background:var(--bg4);
+  color:var(--txt);font-family:'Bricolage Grotesque',sans-serif;
+}
+.tag-p{background:var(--vert-light);color:var(--vert);font-size:0.6rem;padding:3px 8px;border-radius:20px;font-weight:700;}
+.tag-a{background:var(--rouge-light);color:var(--rouge);font-size:0.6rem;padding:3px 8px;border-radius:20px;font-weight:700;}
+.tag-r{background:var(--or-light);color:var(--or);font-size:0.6rem;padding:3px 8px;border-radius:20px;font-weight:700;}
+
+/* ─── CAISSE ─── */
+.solde-box{
+  background:var(--txt);border-radius:24px;padding:24px;
+  text-align:center;margin-bottom:14px;
+  position:relative;overflow:hidden;
+  box-shadow:0 8px 32px rgba(15,26,20,0.25);
+}
+.solde-box::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 30%,rgba(255,255,255,0.08),transparent 60%);
+}
+.solde-box .lbl{font-size:0.6rem;color:rgba(255,255,255,0.5);letter-spacing:3px;text-transform:uppercase;margin-bottom:6px;}
+.solde-montant{
+  font-family:'Instrument Serif',serif;font-size:2.5rem;
+  color:#fff;text-shadow:none;
+}
+.tx{
+  display:flex;align-items:center;gap:10px;
+  background:var(--card2);border:1px solid rgba(255,255,255,0.8);
+  border-radius:16px;padding:12px;margin-bottom:7px;
+  box-shadow:var(--shadow);transition:all 0.2s;
+}
+.tx:hover{transform:translateX(2px);}
+.ti{flex:1;}
+.td{font-size:0.82rem;font-weight:600;color:var(--txt);}
+.tdt{font-size:0.65rem;color:var(--txt2);margin-top:2px;}
+.tm{font-weight:800;font-size:0.9rem;}
+.t-in{color:var(--vert);}
+.t-out{color:var(--rouge);}
+
+/* ─── ACTIVITE ─── */
+.ac{
+  background:var(--card2);border:1px solid rgba(255,255,255,0.8);
+  border-radius:20px;padding:14px;margin-bottom:8px;
+  border-left:4px solid var(--bleu);box-shadow:var(--shadow);transition:all 0.2s;
+}
+.ac:hover{transform:translateX(3px);}
+.tbadge{display:inline-block;font-size:0.58rem;padding:3px 10px;border-radius:20px;font-weight:700;background:var(--bleu-light);color:var(--bleu);margin-top:5px;}
+
+/* ─── AG ─── */
+.agc{background:var(--card2);border:1px solid rgba(255,255,255,0.8);border-radius:20px;padding:14px;margin-bottom:8px;box-shadow:var(--shadow);}
+.agcr{font-size:0.78rem;margin-top:10px;line-height:1.7;color:var(--txt2);white-space:pre-wrap;border-top:1px solid var(--border2);padding-top:10px;}
+
+/* ─── MODAL ─── */
+.mo{display:none;position:fixed;inset:0;background:rgba(15,26,20,0.4);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:200;align-items:flex-end;}
+.mo.open{display:flex;}
+.modal{
+  background:rgba(247,249,245,0.98);backdrop-filter:blur(30px);
+  border:1px solid rgba(255,255,255,0.9);border-top:1px solid rgba(255,255,255,1);
+  border-radius:32px 32px 0 0;padding:24px;width:100%;max-height:90vh;overflow-y:auto;
+  box-shadow:0 -8px 40px rgba(15,26,20,0.15);
+  animation:slideIn 0.3s cubic-bezier(0.34,1.2,0.64,1);
+}
+.modal::before{content:'';display:block;width:40px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 20px;opacity:0.4;}
+.modal-title{font-family:'Instrument Serif',serif;font-size:1.2rem;color:var(--txt);margin-bottom:18px;}
+.mbtns{display:flex;gap:8px;margin-top:16px;}
+.mbtns .btn{flex:1;}
+
+/* ─── EMPTY ─── */
+.empty{text-align:center;padding:36px 16px;color:var(--txt3);}
+.empty-icon{font-size:2.8rem;margin-bottom:12px;}
+.empty p{font-size:0.8rem;line-height:1.7;color:var(--txt2);}
+
+/* ─── MEMBRE SPACE ─── */
+.big-av{width:68px;height:68px;border-radius:20px;background:var(--txt);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:900;margin:0 auto 12px;}
+.profil-card{background:var(--txt);border-radius:24px;padding:22px;margin-bottom:14px;text-align:center;box-shadow:0 8px 32px rgba(15,26,20,0.2);}
+.profil-card *:not(.big-av){color:#fff !important;}
+.tab-nav{display:flex;gap:6px;margin-bottom:14px;}
+.tab-btn{flex:1;padding:9px 6px;border:1.5px solid var(--border);background:transparent;color:var(--txt2);border-radius:14px;font-size:0.68rem;font-weight:700;cursor:pointer;font-family:'Bricolage Grotesque',sans-serif;transition:all 0.2s;}
+.tab-btn.active{background:var(--txt);color:#fff;border-color:var(--txt);}
+.ir{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--border2);font-size:0.83rem;}
+.il{color:var(--txt2);font-size:0.65rem;letter-spacing:0.5px;text-transform:uppercase;}
+.iv{font-weight:700;color:var(--txt);}
+.alert-box{background:var(--rouge-light);border-left:3px solid var(--rouge);border-radius:14px;padding:12px 14px;margin-bottom:10px;font-size:0.78rem;color:var(--rouge);}
+.ok-box{background:var(--vert-light);border-left:3px solid var(--vert);border-radius:14px;padding:12px 14px;margin-bottom:10px;font-size:0.78rem;color:var(--vert);}
+
+/* ─── BILAN ─── */
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.kpi{background:var(--card2);border:1px solid rgba(255,255,255,0.8);border-radius:20px;padding:16px;text-align:center;box-shadow:var(--shadow);transition:transform 0.2s;}
+.kpi:hover{transform:translateY(-2px);}
+.kpi .k-val{font-family:'Instrument Serif',serif;font-size:2rem;line-height:1;}
+.kpi .k-lbl{font-size:0.58rem;color:var(--txt2);margin-top:5px;text-transform:uppercase;letter-spacing:0.8px;font-weight:600;}
+.kpi.k-vert .k-val{color:var(--vert);}
+.kpi.k-bleu .k-val{color:var(--bleu);}
+.kpi.k-or .k-val{color:var(--or);}
+.kpi.k-rouge .k-val{color:var(--rouge);}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.bar-label{font-size:0.73rem;font-weight:600;color:var(--txt);width:110px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.bar-track{flex:1;background:var(--bg2);border-radius:20px;height:10px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:20px;transition:width 0.8s cubic-bezier(0.34,1.2,0.64,1);}
+.bar-val{font-size:0.68rem;font-weight:800;width:36px;text-align:right;flex-shrink:0;}
+.month-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;}
+.month-bar{width:60%;background:var(--accent);border-radius:6px 6px 0 0;min-height:4px;transition:height 0.6s cubic-bezier(0.34,1.2,0.64,1);}
+.month-lbl{font-size:0.56rem;color:var(--txt3);font-weight:600;}
+.month-num{font-size:0.62rem;font-weight:800;color:var(--accent);}
+
+/* ─── DARK MODE ─── */
+[data-theme="dark"]{
+  --bg:#0a0d10;--bg2:#0f1318;--bg3:#141820;--bg4:#1a1f28;
+  --accent:#4daa70;--accent2:#5cc280;--accent-light:rgba(77,170,112,0.1);--accent-mid:rgba(77,170,112,0.2);
+  --or:#e6b84a;--or-light:rgba(230,184,74,0.12);
+  --txt:#e8ede4;--txt2:#7a8a7f;--txt3:#3a4a3f;
+  --vert:#3dd68c;--vert-light:rgba(61,214,140,0.12);
+  --rouge:#f05656;--rouge-light:rgba(240,86,86,0.12);
+  --bleu:#5b9cf6;--bleu-light:rgba(91,156,246,0.12);
+  --card:rgba(255,255,255,0.04);--card2:rgba(255,255,255,0.06);
+  --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.05);
+  --shadow:0 4px 24px rgba(0,0,0,0.4);--shadow2:0 12px 40px rgba(0,0,0,0.5);
+}
+[data-theme="dark"] body::before{
+  background:
+    radial-gradient(ellipse 80% 60% at 0% 0%,rgba(77,170,112,0.08) 0%,transparent 55%),
+    radial-gradient(ellipse 60% 50% at 100% 100%,rgba(77,170,112,0.05) 0%,transparent 55%),
+    radial-gradient(ellipse 40% 40% at 80% 10%,rgba(230,184,74,0.04) 0%,transparent 50%);
+}
+[data-theme="dark"] header{background:rgba(10,13,16,0.92);}
+[data-theme="dark"] .modal{background:rgba(20,24,32,0.98);}
+[data-theme="dark"] .solde-box{background:rgba(77,170,112,0.15);border:1px solid rgba(77,170,112,0.2);}
+[data-theme="dark"] .solde-montant{color:var(--accent);}
+[data-theme="dark"] .solde-box .lbl{color:var(--txt2);}
+[data-theme="dark"] nav button.active{background:var(--accent);color:#fff;}
+[data-theme="dark"] .btn-p{background:var(--accent);color:#fff;}
+[data-theme="dark"] .btn-g{background:rgba(77,170,112,0.15);color:var(--accent);border-color:rgba(77,170,112,0.2);}
+[data-theme="dark"] .role-badge{background:var(--accent);}
+[data-theme="dark"] .hd-icon{background:var(--accent);}
+[data-theme="dark"] .av{background:var(--accent);}
+[data-theme="dark"] .profil-card{background:linear-gradient(135deg,rgba(77,170,112,0.2),rgba(77,170,112,0.05));border:1px solid rgba(77,170,112,0.2);}
+[data-theme="dark"] .login-mesh-card{background:linear-gradient(135deg,rgba(77,170,112,0.2) 0%,rgba(77,170,112,0.05) 50%,rgba(230,184,74,0.08) 100%);}
+[data-theme="dark"] .mesh-blob-1{background:radial-gradient(circle,rgba(77,170,112,0.15),transparent);}
+[data-theme="dark"] .mesh-blob-2{background:radial-gradient(circle,rgba(77,170,112,0.1),transparent);}
+[data-theme="dark"] .tab-btn.active{background:var(--accent);}
+[data-theme="dark"] .btn-admin{background:rgba(255,255,255,0.08);color:var(--txt);}
+[data-theme="dark"] .btn-membre{background:var(--accent);}
+[data-theme="dark"] nav button.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+[data-theme="dark"] .stat .num{color:var(--accent);}
+[data-theme="dark"] .month-bar{background:var(--accent);}
+[data-theme="dark"] .month-num{color:var(--accent);}
+[data-theme="dark"] .sc{border-left-color:var(--accent);}
+[data-theme="dark"] .ac{border-left-color:var(--bleu);}
+
+/* ─── THEME TOGGLE ─── */
+.theme-toggle{
+  width:36px;height:20px;border-radius:10px;border:none;cursor:pointer;
+  background:var(--border);position:relative;transition:all 0.3s;padding:0;flex-shrink:0;
+}
+.theme-toggle::after{
+  content:'';position:absolute;top:3px;left:3px;
+  width:14px;height:14px;border-radius:50%;
+  background:var(--txt2);transition:all 0.3s;
+}
+[data-theme="dark"] .theme-toggle{background:var(--accent-mid);}
+[data-theme="dark"] .theme-toggle::after{transform:translateX(16px);background:var(--accent);}
+
+/* ─── SPLASH SCREEN ─── */
+#splash{
+  position:fixed;inset:0;z-index:9999;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:var(--bg);overflow:hidden;
+  transition:opacity 0.5s ease, transform 0.5s ease;
+}
+#splash.hide{opacity:0;transform:scale(1.05);pointer-events:none;}
+.splash-blob{position:absolute;border-radius:50%;filter:blur(60px);animation:float 4s ease-in-out infinite;}
+.splash-blob-1{width:300px;height:300px;background:radial-gradient(circle,rgba(42,92,63,0.25),transparent);top:-80px;left:-60px;}
+.splash-blob-2{width:250px;height:250px;background:radial-gradient(circle,rgba(42,92,63,0.2),transparent);bottom:-60px;right:-40px;animation-delay:2s;}
+.splash-icon{
+  width:90px;height:90px;border-radius:28px;
+  background:var(--txt);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.5rem;color:#fff;
+  box-shadow:0 16px 48px rgba(15,26,20,0.25);
+  animation:fadeUp 0.5s 0.2s ease both;
+  margin-bottom:20px;z-index:1;
+}
+.splash-title{
+  font-family:'Instrument Serif',serif;font-size:2rem;
+  color:var(--txt);text-align:center;line-height:1.2;
+  animation:fadeUp 0.5s 0.35s ease both;z-index:1;
+}
+.splash-sub{
+  font-size:0.72rem;color:var(--txt2);letter-spacing:3px;text-transform:uppercase;
+  margin-top:8px;animation:fadeUp 0.5s 0.45s ease both;z-index:1;
+}
+.splash-bar{
+  width:60px;height:3px;background:var(--border);border-radius:2px;
+  margin-top:32px;overflow:hidden;z-index:1;
+  animation:fadeUp 0.5s 0.5s ease both;
+}
+.splash-bar-fill{
+  height:100%;width:0%;background:var(--accent);border-radius:2px;
+  animation:load 1.8s 0.6s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+@keyframes load{0%{width:0%;}60%{width:70%;}100%{width:100%;}}
+
+/* ─── SEARCH BAR ─── */
+.search-bar{
+  display:flex;align-items:center;gap:8px;
+  background:var(--card2);border:1.5px solid var(--border);
+  border-radius:14px;padding:10px 14px;margin-bottom:14px;
+  box-shadow:var(--shadow);transition:border-color 0.2s;
+}
+.search-bar:focus-within{border-color:var(--accent);}
+.search-bar input{
+  flex:1;border:none;background:transparent;
+  font-family:'Bricolage Grotesque',sans-serif;font-size:0.84rem;color:var(--txt);
+}
+.search-bar input:focus{outline:none;}
+.search-bar input::placeholder{color:var(--txt3);}
+.search-icon{font-size:0.9rem;color:var(--txt3);}
+
+/* ─── DONUT CHART ─── */
+.donut-wrap{display:flex;align-items:center;gap:20px;padding:8px 0;}
+.donut-svg{flex-shrink:0;}
+.donut-legend{display:flex;flex-direction:column;gap:8px;flex:1;}
+.donut-item{display:flex;align-items:center;gap:8px;font-size:0.78rem;}
+.donut-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+
+/* ─── CHANGE CODE MODAL ─── */
+.code-section{background:var(--bg4);border-radius:14px;padding:14px;margin-bottom:10px;}
+.code-section-title{font-size:0.68rem;font-weight:700;color:var(--txt2);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
+
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<!-- LOGIN -->
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splash-blob splash-blob-1"></div>
+  <div class="splash-blob splash-blob-2"></div>
+  <div class="splash-icon">🎶</div>
+  <div class="splash-title">Groupe de<br>Danse</div>
+  <div class="splash-sub">JAD EEAD · Section</div>
+  <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+</div>
+
+<div id="login-screen">
+  <div class="mesh-blob mesh-blob-1"></div>
+  <div class="mesh-blob mesh-blob-2"></div>
+  <div class="mesh-blob mesh-blob-3"></div>
+  <div class="login-eyebrow">JAD EEAD · Section</div>
+  <div class="login-headline">Groupe de<br><span>Danse</span></div>
+  <div class="login-desc">Application de gestion · Présences, Caisse, Membres & Rapports</div>
+  <div class="login-card">
+    <div class="login-card-label">Choisissez votre accès</div>
+    <button class="login-btn btn-admin" onclick="showLogin('admin')">🔐 Espace Administrateur</button>
+    <div class="login-sep">· · ·</div>
+    <button class="login-btn btn-membre" onclick="showLogin('membre')">👤 Espace Membre</button>
+  </div>
+  <div id="sub-login" style="display:none" class="sub-card">
+    <h2 id="sub-title"></h2>
+    <input class="code-input" type="password" id="code-input" placeholder="Entrez le code">
+    <button class="login-btn btn-admin" id="sub-btn" onclick="doLogin()">Connexion</button>
+    <button class="login-btn" style="background:#eee;color:#333" onclick="hideLogin()">Retour</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+<header>
+  <div class="header-top">
+    <div class="hd-brand">
+      <div class="hd-icon">♪</div>
+      <div><h1>Groupe de Danse</h1><p id="hd-sub">JAD EEAD</p></div>
+    </div>
+    <div style="display:flex;gap:6px;align-items:center">
+      <span class="role-badge" id="hd-role">ADMIN</span>
+      <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()" title="Mode sombre/clair"></button>
+      <button class="btn-logout" onclick="logout()">✕</button>
+    </div>
+  </div>
+  <nav id="app-nav"></nav>
+</header>
+
+<!-- ADMIN -->
+<div id="admin-app" style="display:none">
+  <section id="dash" class="active">
+    <div class="stats">
+      <div class="stat"><div class="num" id="sm">0</div><div class="lbl">Membres</div></div>
+      <div class="stat"><div class="num" id="ss">0</div><div class="lbl">Séances</div></div>
+      <div class="stat"><div class="num" id="sc">0</div><div class="lbl">FCFA</div></div>
+    </div>
+    <div class="card"><div class="card-title">📊 Vue d'ensemble</div><div id="vue-ens"></div></div>
+    <div class="card"><div class="card-title">⚠️ Alertes amendes</div><div id="alertes"></div></div>
+    <div class="card"><div class="card-title">📅 Prochaine activité</div><div id="proch-act"></div></div>
+  </section>
+
+  <section id="sec-membres">
+    <div class="sec-hd"><h2>👥 Membres (<span id="nb-m">0</span>)</h2><button class="btn btn-g" onclick="oM('m-modal')">+ Ajouter</button></div>
+    <div class="search-bar"><span class="search-icon">🔍</span><input type="text" id="search-m" placeholder="Rechercher un membre..." oninput="renderM()"></div>
+    <div id="liste-m"></div>
+  </section>
+
+  <section id="sec-seances">
+    <div class="sec-hd"><h2>🎶 Séances</h2><button class="btn btn-g" onclick="oM('s-modal')">+ Nouvelle</button></div>
+    <div id="seance-active"></div>
+    <div class="card"><div class="card-title">📋 Historique</div><div id="histo-s"></div></div>
+  </section>
+
+  <section id="sec-caisse">
+    <div class="solde-box">
+      <div style="font-size:0.72rem;opacity:0.8">SOLDE ACTUEL</div>
+      <div class="solde-montant" id="solde-txt">0 FCFA</div>
+    </div>
+    <div class="sec-hd"><h2>💰 Transactions</h2><button class="btn btn-g" onclick="oM('t-modal')">+ Ajouter</button></div>
+    <div id="liste-t"></div>
+  </section>
+
+  <section id="sec-act">
+    <div class="sec-hd"><h2>📅 Activités</h2><button class="btn btn-g" onclick="oM('a-modal')">+ Ajouter</button></div>
+    <div id="liste-a"></div>
+  </section>
+
+  <section id="sec-ag">
+    <div class="sec-hd"><h2>📋 Assemblées Générales</h2><button class="btn btn-g" onclick="oM('ag-modal')">+ Nouvelle</button></div>
+    <div id="liste-ag"></div>
+  </section>
+
+  <section id="sec-bilan">
+    <div class="card" style="margin-bottom:12px">
+      <div class="card-title">📊 Générer un rapport</div>
+      <div class="fr" style="margin-bottom:10px">
+        <div class="fg"><label>Type</label>
+          <select id="rp-type" onchange="updateRpPeriod()">
+            <option value="month">Rapport mensuel</option>
+            <option value="year">Rapport annuel</option>
+          </select>
+        </div>
+        <div class="fg" id="rp-month-group"><label>Mois</label>
+          <select id="rp-month">
+            <option value="0">Janvier</option><option value="1">Février</option><option value="2">Mars</option>
+            <option value="3">Avril</option><option value="4">Mai</option><option value="5">Juin</option>
+            <option value="6">Juillet</option><option value="7">Août</option><option value="8">Septembre</option>
+            <option value="9">Octobre</option><option value="10">Novembre</option><option value="11">Décembre</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg"><label>Année</label>
+        <select id="rp-year">
+          <option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button class="btn btn-p" style="flex:1" onclick="renderBilan()">🔄 Afficher le bilan</button>
+        <button class="btn btn-g" style="flex:1" onclick="exportPDF()">📄 PDF</button>
+        <button class="btn" style="flex:1;background:#2e6cb8;color:#fff" onclick="exportWord()">📝 Word</button>
+      </div>
+    </div>
+    <div id="bilan-content"></div>
+  </section>
+
+
+  <section id="sec-settings">
+    <div class="sec-hd"><h2>⚙️ Réglages</h2></div>
+
+    <div class="card">
+      <div class="card-title">🎨 Apparence</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0">
+        <div>
+          <div style="font-weight:600;font-size:0.88rem">Mode sombre</div>
+          <div style="font-size:0.72rem;color:var(--txt2);margin-top:2px">Changer l'apparence de l'app</div>
+        </div>
+        <button class="theme-toggle" id="theme-btn2" onclick="toggleTheme()"></button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔐 Codes d'accès</div>
+      <div class="code-section">
+        <div class="code-section-title">Code Administrateur</div>
+        <div class="fg"><label>Ancien code</label><input type="password" id="old-admin-code" placeholder="Code actuel"></div>
+        <div class="fg"><label>Nouveau code</label><input type="password" id="new-admin-code" placeholder="Nouveau code"></div>
+        <div class="fg"><label>Confirmer</label><input type="password" id="confirm-admin-code" placeholder="Confirmer le nouveau code"></div>
+        <button class="btn btn-p btn-f" onclick="changeCode('admin')">Changer le code admin</button>
+      </div>
+      <div class="code-section" style="margin-bottom:0">
+        <div class="code-section-title">Code Membre</div>
+        <div class="fg"><label>Ancien code</label><input type="password" id="old-membre-code" placeholder="Code actuel"></div>
+        <div class="fg"><label>Nouveau code</label><input type="password" id="new-membre-code" placeholder="Nouveau code"></div>
+        <div class="fg"><label>Confirmer</label><input type="password" id="confirm-membre-code" placeholder="Confirmer le nouveau code"></div>
+        <button class="btn btn-g btn-f" onclick="changeCode('membre')">Changer le code membre</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📱 Installer l'application</div>
+      <p style="font-size:0.82rem;color:var(--txt2);margin-bottom:14px;line-height:1.6">Installez l'application sur votre téléphone pour y accéder comme une vraie app, sans navigateur.</p>
+      <div style="background:var(--bg4);border-radius:14px;padding:14px;margin-bottom:10px;">
+        <div style="font-weight:700;font-size:0.82rem;margin-bottom:8px">📱 Sur iPhone (Safari)</div>
+        <div style="font-size:0.76rem;color:var(--txt2);line-height:1.8">1. Ouvrez le fichier dans Safari<br>2. Appuyez sur le bouton <b>Partager</b> ↑<br>3. Choisissez <b>"Sur l'écran d'accueil"</b><br>4. Confirmez avec <b>"Ajouter"</b></div>
+      </div>
+      <div style="background:var(--bg4);border-radius:14px;padding:14px;">
+        <div style="font-weight:700;font-size:0.82rem;margin-bottom:8px">🤖 Sur Android (Chrome)</div>
+        <div style="font-size:0.76rem;color:var(--txt2);line-height:1.8">1. Ouvrez le fichier dans Chrome<br>2. Appuyez sur les <b>3 points</b> ⋮<br>3. Choisissez <b>"Ajouter à l'écran d'accueil"</b><br>4. Confirmez</div>
+      </div>
+      <button class="btn btn-p btn-f" id="pwa-install-btn" style="display:none" onclick="installPWA()">📲 Installer maintenant</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">ℹ️ À propos</div>
+      <div style="font-size:0.82rem;color:var(--txt2);line-height:1.8">
+        <div>Application de gestion du Groupe de Danse</div>
+        <div>JAD EEAD — Section</div>
+        <div style="margin-top:8px;font-size:0.72rem">Initié par la JAD de l'église EEAD Alansakomey Temple Jérusalem</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- MEMBRE -->
+<div id="membre-app" style="display:none">
+  <section id="sec-espace" class="active">
+    <div id="zone-inscription">
+      <div class="card">
+        <div class="card-title">👋 Inscription au groupe</div>
+        <p style="font-size:0.83rem;margin-bottom:14px;color:#555">Renseignez vos informations pour rejoindre la base de données du groupe.</p>
+        <div class="fg"><label>Nom complet *</label><input type="text" id="ins-nom" placeholder="Prénom Nom"></div>
+        <div class="fr">
+          <div class="fg"><label>Sexe</label><select id="ins-sexe"><option value="M">Masculin</option><option value="F">Féminin</option></select></div>
+          <div class="fg"><label>Âge</label><input type="number" id="ins-age" placeholder="Ex: 22"></div>
+        </div>
+        <div class="fg"><label>Église *</label><input type="text" id="ins-eglise" placeholder="Nom de votre église"></div>
+        <div class="fg"><label>Contact WhatsApp *</label><input type="tel" id="ins-contact" placeholder="+229 ..."></div>
+        <div class="fg"><label>Niveau en danse</label>
+          <select id="ins-exp"><option value="Débutant(e)">Débutant(e)</option><option value="Intermédiaire">Intermédiaire</option><option value="Avancé(e)">Avancé(e)</option></select>
+        </div>
+        <div class="fg"><label>Style de danse maîtrisé</label><input type="text" id="ins-style" placeholder="Ex: Moderne, Traditionnel, Louange..."></div>
+        <div class="fg"><label>Pourquoi rejoindre le groupe ?</label><textarea id="ins-motiv" rows="3" placeholder="Quelques mots..."></textarea></div>
+        <button class="btn btn-p btn-f" onclick="inscrire()">✅ Soumettre mon inscription</button>
+      </div>
+    </div>
+
+    <div id="zone-profil" style="display:none">
+      <div class="tab-nav">
+        <button class="tab-btn active" onclick="mTab('t-profil')">👤 Profil</button>
+        <button class="tab-btn" onclick="mTab('t-seances')">✅ Séances</button>
+        <button class="tab-btn" onclick="mTab('t-amendes')">⚠️ Amendes</button>
+      </div>
+      <div id="t-profil">
+        <div class="profil-card">
+          <div class="big-av" id="p-av">--</div>
+          <div style="font-size:1.1rem;font-weight:700" id="p-nom">--</div>
+          <div style="font-size:0.75rem;opacity:0.8;margin-top:4px" id="p-egl">--</div>
+          <div style="margin-top:8px"><span class="badge b-ok" id="p-role">Membre</span></div>
+        </div>
+        <div class="card"><div class="card-title">📋 Mes informations</div><div id="p-infos"></div></div>
+      </div>
+      <div id="t-seances" style="display:none">
+        <div class="card"><div class="card-title">✅ Mes présences</div><div id="m-pres"></div></div>
+      </div>
+      <div id="t-amendes" style="display:none">
+        <div class="card"><div class="card-title">⚠️ Mes amendes</div><div id="m-am"></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+</div>
+
+<!-- MODALS -->
+<!-- Membre -->
+<div class="mo" id="m-modal">
+  <div class="modal">
+    <div class="modal-title">👤 Ajouter un membre</div>
+    <div class="fg"><label>Nom complet *</label><input type="text" id="m-nom" placeholder="Prénom Nom"></div>
+    <div class="fr">
+      <div class="fg"><label>Église</label><input type="text" id="m-egl"></div>
+      <div class="fg"><label>Sexe</label><select id="m-sx"><option value="M">Masculin</option><option value="F">Féminin</option></select></div>
+    </div>
+    <div class="fg"><label>Contact</label><input type="tel" id="m-ct"></div>
+    <div class="fg"><label>Rôle</label>
+      <select id="m-rl"><option>Danseur/Danseuse</option><option>Président(e)</option><option>Vice-Président(e)</option><option>Secrétaire</option><option>Trésorier/Trésorière</option><option>Responsable artistique</option><option>Responsable communication</option></select>
+    </div>
+    <div class="mbtns"><button class="btn btn-p" onclick="addM()">Enregistrer</button><button class="btn" style="background:#eee" onclick="cM('m-modal')">Annuler</button></div>
+  </div>
+</div>
+
+<!-- Séance -->
+<div class="mo" id="s-modal">
+  <div class="modal">
+    <div class="modal-title">🎶 Nouvelle séance</div>
+    <div class="fg"><label>Date *</label><input type="date" id="s-dt"></div>
+    <div class="fg"><label>Lieu</label><input type="text" id="s-li" placeholder="Lieu de répétition"></div>
+    <div class="fg"><label>Programme / Notes du jour</label><textarea id="s-nt" rows="3" placeholder="Chorégraphies travaillées, annonces importantes..."></textarea></div>
+    <div class="mbtns"><button class="btn btn-p" onclick="startSeance()">Démarrer le pointage</button><button class="btn" style="background:#eee" onclick="cM('s-modal')">Annuler</button></div>
+  </div>
+</div>
+
+<!-- Transaction -->
+<div class="mo" id="t-modal">
+  <div class="modal">
+    <div class="modal-title">💰 Nouvelle transaction</div>
+    <div class="fg"><label>Type *</label><select id="t-tp"><option value="cotisation">Cotisation</option><option value="amende">Amende</option><option value="don">Don/Contribution</option><option value="sortie">Dépense</option></select></div>
+    <div class="fg"><label>Membre</label><select id="t-mb"><option value="">-- Optionnel --</option></select></div>
+    <div class="fg"><label>Description *</label><input type="text" id="t-ds" placeholder="Ex: Cotisation séance 12 mars"></div>
+    <div class="fg"><label>Montant (FCFA) *</label><input type="number" id="t-mt" placeholder="0"></div>
+    <div class="fg"><label>Date</label><input type="date" id="t-dt"></div>
+    <div class="mbtns"><button class="btn btn-p" onclick="addT()">Enregistrer</button><button class="btn" style="background:#eee" onclick="cM('t-modal')">Annuler</button></div>
+  </div>
+</div>
+
+<!-- Activité -->
+<div class="mo" id="a-modal">
+  <div class="modal">
+    <div class="modal-title">📅 Nouvelle activité</div>
+    <div class="fg"><label>Titre *</label><input type="text" id="a-ti"></div>
+    <div class="fg"><label>Type</label><select id="a-tp"><option>🎶 Répétition</option><option>🎤 Prestation</option><option>🎭 Mini concert</option><option>🎊 Concert fin d'année</option><option>🌴 Sortie récréative</option><option>🎬 Sortie déo</option><option>🎭 Théâtre</option><option>📋 AG</option><option>Autre</option></select></div>
+    <div class="fr"><div class="fg"><label>Date *</label><input type="date" id="a-dt"></div><div class="fg"><label>Heure</label><input type="time" id="a-hr"></div></div>
+    <div class="fg"><label>Lieu</label><input type="text" id="a-li"></div>
+    <div class="fg"><label>Notes</label><textarea id="a-nt" rows="2"></textarea></div>
+    <div class="mbtns"><button class="btn btn-p" onclick="addA()">Enregistrer</button><button class="btn" style="background:#eee" onclick="cM('a-modal')">Annuler</button></div>
+  </div>
+</div>
+
+<!-- AG -->
+<div class="mo" id="ag-modal">
+  <div class="modal">
+    <div class="modal-title">📋 Nouvelle AG</div>
+    <div class="fg"><label>Titre *</label><input type="text" id="ag-ti" placeholder="Ex: AG1 — Mobilisation des membres"></div>
+    <div class="fr"><div class="fg"><label>Date *</label><input type="date" id="ag-dt"></div><div class="fg"><label>Participants</label><input type="number" id="ag-pt" placeholder="0"></div></div>
+    <div class="fg"><label>Lieu</label><input type="text" id="ag-li"></div>
+    <div class="fg"><label>Compte rendu / Décisions</label><textarea id="ag-cr" rows="5" placeholder="Résumé des décisions et points abordés..."></textarea></div>
+    <div class="mbtns"><button class="btn btn-p" onclick="addAG()">Enregistrer</button><button class="btn" style="background:#eee" onclick="cM('ag-modal')">Annuler</button></div>
+  </div>
+</div>
+
+<!-- Détail séance -->
+<div class="mo" id="ds-modal">
+  <div class="modal">
+    <div class="modal-title" id="ds-titre">Séance</div>
+    <div id="ds-content"></div>
+    <div class="mbtns"><button class="btn" style="background:#eee;width:100%" onclick="cM('ds-modal')">Fermer</button></div>
+  </div>
+</div>
+
+<script>
+let ADMIN_CODE='EEAD@Admin2025';
+let MEMBRE_CODE='EEAD2025';
+let db={membres:[],seances:[],transactions:[],activites:[],ags:[]};
+let role=null, memId=null, loginTarget=null, activeSeance=null;
+let pwaPrompt=null;
+
+// ─── SUPABASE ───
+const SUPA_URL='https://qtmgblvtvdzuoxvmjnex.supabase.co';
+const SUPA_KEY='sb_publishable_FcKumTQQYFkf0Ep5GeqcNw_cXOpgOlL';
+const supa=supabase.createClient(SUPA_URL,SUPA_KEY);
+
+function showLoader(msg='Chargement...'){
+  let el=document.getElementById('global-loader');
+  if(!el){
+    el=document.createElement('div');el.id='global-loader';
+    el.style.cssText='position:fixed;inset:0;background:rgba(15,26,20,0.5);backdrop-filter:blur(4px);z-index:9998;display:flex;align-items:center;justify-content:center;';
+    el.innerHTML=`<div style="background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:24px 32px;text-align:center;box-shadow:var(--shadow2)">
+      <div style="font-size:1.8rem;margin-bottom:10px;animation:spin-slow 1s linear infinite">⚙️</div>
+      <div style="font-size:0.82rem;font-weight:600;color:var(--txt)" id="loader-msg">${msg}</div>
+    </div>`;
+    document.body.appendChild(el);
+  } else { document.getElementById('loader-msg').textContent=msg; el.style.display='flex'; }
+}
+function hideLoader(){const el=document.getElementById('global-loader');if(el)el.style.display='none';}
+
+async function save(){}  // No-op: saves happen directly via Supabase
+
+async function load(){
+  try {
+    showLoader('Chargement des données...');
+    const [m,s,t,a,ag]=await Promise.all([
+      supa.from('membres').select('*').order('date_ajout',{ascending:true}),
+      supa.from('seances').select('*').order('date',{ascending:false}),
+      supa.from('transactions').select('*').order('date',{ascending:false}),
+      supa.from('activites').select('*').order('date',{ascending:true}),
+      supa.from('ags').select('*').order('date',{ascending:false}),
+    ]);
+    db.membres=(m.data||[]).map(r=>({
+      id:r.id,nom:r.nom,eglise:r.eglise,sexe:r.sexe,age:r.age,contact:r.contact,
+      role:r.role,exp:r.exp,style:r.style,motiv:r.motiv,
+      absences:r.absences||0,retards:r.retards||0,dateAjout:r.date_ajout
+    }));
+    db.seances=(s.data||[]).map(r=>({
+      id:r.id,date:r.date,lieu:r.lieu,notes:r.notes,
+      pointage:r.pointage||{},cotisations:r.cotisations||{},validee:r.validee
+    }));
+    db.transactions=(t.data||[]).map(r=>({
+      id:r.id,type:r.type,desc:r.description,montant:r.montant,date:r.date,membreId:r.membre_id
+    }));
+    db.activites=(a.data||[]).map(r=>({
+      id:r.id,titre:r.titre,date:r.date,type:r.type,heure:r.heure,lieu:r.lieu,notes:r.notes
+    }));
+    db.ags=(ag.data||[]).map(r=>({
+      id:r.id,titre:r.titre,date:r.date,lieu:r.lieu,participants:r.participants,cr:r.cr
+    }));
+  } catch(e){ console.error('Load error:',e); }
+  finally { hideLoader(); }
+}
+
+async function dbInsert(table,row){
+  const {error}=await supa.from(table).insert(row);
+  if(error)throw error;
+}
+async function dbUpdate(table,id,row){
+  const {error}=await supa.from(table).update(row).eq('id',id);
+  if(error)throw error;
+}
+async function dbDelete(table,id){
+  const {error}=await supa.from(table).delete().eq('id',id);
+  if(error)throw error;
+}
+function gid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,5);}
+function ini(n){return n.split(' ').map(x=>x[0]).join('').toUpperCase().slice(0,2);}
+function fd(d){return new Date(d+'T12:00:00').toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'});}
+function solde(){return db.transactions.reduce((a,t)=>t.type==='sortie'?a-t.montant:a+t.montant,0);}
+
+// LOGIN
+function showLogin(target){
+  loginTarget=target;
+  document.getElementById('sub-title').textContent=target==='admin'?'🔐 Code administrateur':'👤 Code membre';
+  document.getElementById('sub-btn').className='login-btn '+(target==='admin'?'btn-admin':'btn-membre');
+  document.getElementById('sub-login').style.display='block';
+  document.getElementById('code-input').value='';
+  document.getElementById('code-input').focus();
+}
+function hideLogin(){document.getElementById('sub-login').style.display='none';}
+function doLogin(){
+  const code=document.getElementById('code-input').value;
+  if(loginTarget==='admin'&&code===ADMIN_CODE){role='admin';startApp();}
+  else if(loginTarget==='membre'&&code===MEMBRE_CODE){role='membre';startApp();}
+  else alert('Code incorrect !');
+}
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('sub-login').style.display!=='none')doLogin();});
+
+function logout(){
+  role=null;memId=null;activeSeance=null;
+  document.getElementById('app').style.display='none';
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('sub-login').style.display='none';
+  document.getElementById('code-input').value='';
+}
+
+function startApp(){
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('app').style.display='block';
+  if(role==='admin'){
+    document.getElementById('admin-app').style.display='block';
+    document.getElementById('membre-app').style.display='none';
+    document.getElementById('hd-role').textContent='ADMIN';
+    document.getElementById('hd-sub').textContent='Mode Administrateur';
+    document.getElementById('app-nav').innerHTML=`
+      <button class="active" onclick="aTab('dash')">🏠 Accueil</button>
+      <button onclick="aTab('sec-membres')">👥 Membres</button>
+      <button onclick="aTab('sec-seances')">🎶 Séances</button>
+      <button onclick="aTab('sec-caisse')">💰 Caisse</button>
+      <button onclick="aTab('sec-act')">📅 Activités</button>
+      <button onclick="aTab('sec-ag')">📋 AG</button>
+      <button onclick="aTab('sec-bilan')">📊 Bilan</button>
+      <button onclick="aTab('sec-settings')">⚙️ Réglages</button>`;
+    renderDash();
+  } else {
+    document.getElementById('admin-app').style.display='none';
+    document.getElementById('membre-app').style.display='block';
+    document.getElementById('hd-role').textContent='MEMBRE';
+    document.getElementById('hd-sub').textContent='Espace Membre';
+    document.getElementById('app-nav').innerHTML=`<button class="active">👤 Mon Espace</button>`;
+    renderEspace();
+  }
+}
+
+// TABS ADMIN
+function aTab(id){
+  document.querySelectorAll('#admin-app section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('#app-nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const tabs=['dash','sec-membres','sec-seances','sec-caisse','sec-act','sec-ag','sec-bilan','sec-settings'];
+  document.querySelectorAll('#app-nav button')[tabs.indexOf(id)]?.classList.add('active');
+  ({dash:renderDash,'sec-membres':renderM,'sec-seances':renderS,'sec-caisse':renderC,'sec-act':renderA,'sec-ag':renderAG,'sec-bilan':renderBilan,'sec-settings':renderSettings})[id]?.();
+}
+
+// MODALS
+function oM(id){
+  document.getElementById(id).classList.add('open');
+  const today=new Date().toISOString().split('T')[0];
+  if(id==='s-modal')document.getElementById('s-dt').value=today;
+  if(id==='t-modal'){document.getElementById('t-dt').value=today;popMb();}
+  if(id==='ag-modal')document.getElementById('ag-dt').value=today;
+}
+function cM(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.mo').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
+function popMb(){
+  document.getElementById('t-mb').innerHTML='<option value="">-- Optionnel --</option>'+
+    db.membres.map(m=>`<option value="${m.id}">${m.nom}</option>`).join('');
+}
+
+// MEMBRES
+async function addM(){
+  const n=document.getElementById('m-nom').value.trim();
+  if(!n)return alert('Le nom est obligatoire !');
+  const row={id:gid(),nom:n,eglise:document.getElementById('m-egl').value.trim(),
+    sexe:document.getElementById('m-sx').value,contact:document.getElementById('m-ct').value.trim(),
+    role:document.getElementById('m-rl').value,absences:0,retards:0,date_ajout:new Date().toISOString()};
+  try{
+    showLoader('Enregistrement...');
+    await dbInsert('membres',row);
+    db.membres.push({...row,dateAjout:row.date_ajout});
+    cM('m-modal');
+    document.getElementById('m-nom').value='';document.getElementById('m-egl').value='';document.getElementById('m-ct').value='';
+    renderM();renderDash();
+  }catch(e){alert('Erreur: '+e.message);}
+  finally{hideLoader();}
+}
+async function delM(id){
+  if(!confirm('Supprimer ce membre ?'))return;
+  try{showLoader('Suppression...');await dbDelete('membres',id);db.membres=db.membres.filter(m=>m.id!==id);renderM();renderDash();}
+  catch(e){alert('Erreur: '+e.message);}finally{hideLoader();}
+}
+function renderM(){
+  document.getElementById('nb-m').textContent=db.membres.length;
+  const el=document.getElementById('liste-m');
+  const q=(document.getElementById('search-m')?.value||'').toLowerCase().trim();
+  const liste=q?db.membres.filter(m=>m.nom.toLowerCase().includes(q)||(m.eglise||'').toLowerCase().includes(q)||(m.role||'').toLowerCase().includes(q)):db.membres;
+  if(!db.membres.length){el.innerHTML='<div class="empty"><div class="empty-icon">👥</div><p>Aucun membre.<br>Ajoutez le premier !</p></div>';return;}
+  if(!liste.length){el.innerHTML='<div class="empty"><div class="empty-icon">🔍</div><p>Aucun résultat pour<br><b>"'+q+'"</b></p></div>';return;}
+  el.innerHTML=liste.map(m=>`
+    <div class="mc">
+      <div class="av">${ini(m.nom)}</div>
+      <div class="mi">
+        <div class="mn">${m.nom}</div>
+        <div class="md">${m.eglise||'Église non précisée'} · ${m.role}</div>
+        <div><span class="badge b-ok">✅</span>${m.absences>0?`<span class="badge b-abs">❌${m.absences}</span>`:''}${m.retards>0?`<span class="badge b-ret">⏰${m.retards}</span>`:''}</div>
+      </div>
+      <button class="btn btn-d" onclick="delM('${m.id}')">✕</button>
+    </div>`).join('');
+}
+
+// SEANCES
+function startSeance(){
+  const dt=document.getElementById('s-dt').value;
+  if(!dt)return alert('Date obligatoire !');
+  if(!db.membres.length)return alert('Ajoutez des membres d\'abord !');
+  activeSeance={id:gid(),date:dt,lieu:document.getElementById('s-li').value.trim(),
+    notes:document.getElementById('s-nt').value.trim(),pointage:{},cotisations:{},validee:false};
+  cM('s-modal');document.getElementById('s-nt').value='';document.getElementById('s-li').value='';
+  renderS();
+}
+
+function renderS(){
+  renderSA();
+  const el=document.getElementById('histo-s');
+  const done=db.seances.filter(s=>s.validee);
+  if(!done.length){el.innerHTML='<p style="font-size:0.82rem;color:var(--gris)">Aucune séance validée.</p>';return;}
+  el.innerHTML=[...done].reverse().map(s=>{
+    const vals=Object.values(s.pointage);
+    const abs=vals.filter(p=>p==='absent').length,ret=vals.filter(p=>p==='retard').length,pres=vals.length-abs-ret;
+    const tot=Object.values(s.cotisations||{}).reduce((a,v)=>a+(parseFloat(v)||0),0);
+    return `<div class="sc" onclick="voirS('${s.id}')">
+      <div style="font-weight:700;font-size:0.88rem;color:var(--bleu)">📅 ${fd(s.date)}</div>
+      <div style="font-size:0.7rem;color:var(--gris)">${s.lieu||''}</div>
+      <div style="display:flex;gap:10px;margin-top:5px;font-size:0.75rem">
+        <span style="color:var(--vert)">✅ ${pres}</span><span style="color:var(--jaune-txt)">⏰ ${ret}</span>
+        <span style="color:var(--rouge)">❌ ${abs}</span><span style="color:var(--bleu)">💰 ${tot.toLocaleString('fr-FR')} F</span>
+      </div></div>`;
+  }).join('');
+}
+
+function renderSA(){
+  const z=document.getElementById('seance-active');
+  if(!activeSeance){z.innerHTML='';return;}
+  z.innerHTML=`<div class="card" style="border:2px solid var(--or)">
+    <div class="card-title">🎶 Séance du ${fd(activeSeance.date)} — Pointage en cours</div>
+    ${activeSeance.notes?`<div style="background:#f8f8f8;border-radius:6px;padding:8px;font-size:0.78rem;color:#555;margin-bottom:10px">${activeSeance.notes}</div>`:''}
+    <div style="font-size:0.7rem;color:var(--gris);margin-bottom:8px">☑ Cocher = absent · ⏰ = retard · Montant = cotisation apportée</div>
+    ${db.membres.map(m=>{
+      const pt=activeSeance.pointage[m.id]||'present';
+      const co=activeSeance.cotisations[m.id]||'';
+      const isAbs=pt==='absent',isRet=pt==='retard';
+      return `<div class="pointage-row">
+        <div class="pnom">${m.nom}</div>
+        <div class="pact">
+          <label style="font-size:0.7rem;display:flex;align-items:center;gap:3px;cursor:pointer">
+            <input type="checkbox" class="chk" ${isAbs?'checked':''} onchange="setPt('${m.id}','absent',this.checked)"> ❌
+          </label>
+          <label style="font-size:0.7rem;display:flex;align-items:center;gap:3px;cursor:pointer">
+            <input type="checkbox" class="chk chk-ret" ${isRet?'checked':''} onchange="setPt('${m.id}','retard',this.checked)"> ⏰
+          </label>
+          <input class="ci" type="number" placeholder="FCFA" value="${co}" ${isAbs?'disabled':''} onchange="setCo('${m.id}',this.value)" placeholder="Cotis.">
+        </div>
+      </div>`;
+    }).join('')}
+    <button class="btn btn-s btn-f" onclick="validerS()">✅ Valider la séance</button>
+  </div>`;
+}
+
+function setPt(id,type,checked){
+  if(!activeSeance)return;
+  if(checked){
+    activeSeance.pointage[id]=type;
+    if(type==='absent')delete activeSeance.cotisations[id];
+  } else {
+    activeSeance.pointage[id]='present';
+  }
+  renderSA();
+}
+function setCo(id,val){if(activeSeance)activeSeance.cotisations[id]=parseFloat(val)||0;}
+
+async function validerS(){
+  if(!activeSeance||!confirm('Valider cette séance ?'))return;
+  try{
+    showLoader('Validation en cours...');
+    db.membres.forEach(m=>{if(!activeSeance.pointage[m.id])activeSeance.pointage[m.id]='present';});
+    // Update absences/retards
+    const updates=[];
+    db.membres.forEach(m=>{
+      if(activeSeance.pointage[m.id]==='absent'){m.absences++;updates.push(dbUpdate('membres',m.id,{absences:m.absences}));}
+      if(activeSeance.pointage[m.id]==='retard'){m.retards++;updates.push(dbUpdate('membres',m.id,{retards:m.retards}));}
+    });
+    // Insert cotisations
+    const cotisRows=[];
+    Object.entries(activeSeance.cotisations).forEach(([mId,mt])=>{
+      if(mt>0){
+        const row={id:gid(),type:'cotisation',description:`Cotisation ${fd(activeSeance.date)}`,montant:mt,date:activeSeance.date,membre_id:mId};
+        cotisRows.push(row);
+        db.transactions.push({id:row.id,type:'cotisation',desc:row.description,montant:mt,date:activeSeance.date,membreId:mId});
+      }
+    });
+    // Insert seance
+    const seanceRow={id:activeSeance.id,date:activeSeance.date,lieu:activeSeance.lieu,notes:activeSeance.notes,
+      pointage:activeSeance.pointage,cotisations:activeSeance.cotisations,validee:true};
+    await Promise.all([
+      dbInsert('seances',seanceRow),
+      ...updates,
+      ...(cotisRows.length?[supa.from('transactions').insert(cotisRows)]:[])
+    ]);
+    activeSeance.validee=true;
+    db.seances.push(activeSeance);
+    activeSeance=null;
+    renderS();renderDash();renderC();
+    alert('✅ Séance validée !');
+  }catch(e){alert('Erreur: '+e.message);}
+  finally{hideLoader();}
+}
+
+function voirS(id){
+  const s=db.seances.find(x=>x.id===id);if(!s)return;
+  document.getElementById('ds-titre').textContent=`Séance du ${fd(s.date)}`;
+  document.getElementById('ds-content').innerHTML=
+    (s.notes?`<div style="background:#f8f8f8;border-radius:8px;padding:10px;margin-bottom:12px;font-size:0.8rem">${s.notes}</div>`:'')+
+    (s.lieu?`<div style="font-size:0.78rem;color:var(--gris);margin-bottom:10px">📍 ${s.lieu}</div>`:'')+
+    db.membres.map(m=>{
+      const pt=s.pointage[m.id]||'—',co=s.cotisations?.[m.id]||0;
+      const tag=pt==='absent'?'<span class="tag-a">❌ Absent</span>':pt==='retard'?'<span class="tag-r">⏰ Retard</span>':'<span class="tag-p">✅ Présent</span>';
+      return `<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #f0f0f0;font-size:0.82rem">
+        <span>${m.nom}</span><div style="display:flex;gap:8px;align-items:center">${tag}${co>0?`<span style="color:var(--vert);font-weight:600">${co.toLocaleString('fr-FR')} F</span>`:''}</div></div>`;
+    }).join('');
+  oM('ds-modal');
+}
+
+// CAISSE
+async function addT(){
+  const ds=document.getElementById('t-ds').value.trim(),mt=parseFloat(document.getElementById('t-mt').value),dt=document.getElementById('t-dt').value;
+  if(!ds||!mt||!dt)return alert('Remplissez tous les champs !');
+  const row={id:gid(),type:document.getElementById('t-tp').value,description:ds,montant:mt,date:dt,membre_id:document.getElementById('t-mb').value||null};
+  try{
+    showLoader('Enregistrement...');
+    await dbInsert('transactions',row);
+    db.transactions.unshift({id:row.id,type:row.type,desc:ds,montant:mt,date:dt,membreId:row.membre_id});
+    cM('t-modal');document.getElementById('t-ds').value='';document.getElementById('t-mt').value='';
+    renderC();renderDash();
+  }catch(e){alert('Erreur: '+e.message);}finally{hideLoader();}
+}
+function renderC(){
+  document.getElementById('solde-txt').textContent=solde().toLocaleString('fr-FR')+' FCFA';
+  const el=document.getElementById('liste-t');
+  if(!db.transactions.length){el.innerHTML='<div class="empty"><div class="empty-icon">💰</div><p>Aucune transaction.</p></div>';return;}
+  const icons={cotisation:'💚',amende:'⚠️',don:'🎁',sortie:'🔴'};
+  el.innerHTML=[...db.transactions].reverse().map(t=>{
+    const m=t.membreId?db.membres.find(x=>x.id===t.membreId):null;
+    return `<div class="tx">
+      <div class="ti"><div class="td">${icons[t.type]||''} ${t.desc}${m?' · '+m.nom:''}</div><div class="tdt">${fd(t.date)}</div></div>
+      <div class="tm ${t.type==='sortie'?'t-out':'t-in'}">${t.type==='sortie'?'-':'+'} ${t.montant.toLocaleString('fr-FR')} F</div>
+    </div>`;
+  }).join('');
+}
+
+// ACTIVITES
+async function addA(){
+  const ti=document.getElementById('a-ti').value.trim(),dt=document.getElementById('a-dt').value;
+  if(!ti||!dt)return alert('Titre et date obligatoires !');
+  const row={id:gid(),titre:ti,date:dt,type:document.getElementById('a-tp').value,
+    heure:document.getElementById('a-hr').value,lieu:document.getElementById('a-li').value.trim(),
+    notes:document.getElementById('a-nt').value.trim()};
+  try{
+    showLoader('Enregistrement...');
+    await dbInsert('activites',row);
+    db.activites.push(row);
+    cM('a-modal');document.getElementById('a-ti').value='';document.getElementById('a-nt').value='';
+    renderA();renderDash();
+  }catch(e){alert('Erreur: '+e.message);}finally{hideLoader();}
+}
+async function delA(id){
+  if(!confirm('Supprimer ?'))return;
+  try{showLoader('Suppression...');await dbDelete('activites',id);db.activites=db.activites.filter(a=>a.id!==id);renderA();}
+  catch(e){alert('Erreur: '+e.message);}finally{hideLoader();}
+}
+function renderA(){
+  const el=document.getElementById('liste-a');
+  if(!db.activites.length){el.innerHTML='<div class="empty"><div class="empty-icon">📅</div><p>Aucune activité.</p></div>';return;}
+  el.innerHTML=[...db.activites].sort((a,b)=>new Date(a.date)-new Date(b.date)).map(a=>`
+    <div class="ac">
+      <div style="display:flex;justify-content:space-between">
+        <div style="flex:1"><div style="font-weight:600;font-size:0.88rem">${a.titre}</div>
+        <div style="font-size:0.7rem;color:var(--gris)">📅 ${fd(a.date)}${a.heure?' · '+a.heure:''}${a.lieu?' · '+a.lieu:''}</div>
+        <div class="tbadge">${a.type}</div>${a.notes?`<div style="font-size:0.76rem;color:#555;margin-top:5px">${a.notes}</div>`:''}</div>
+        <button class="btn btn-d" onclick="delA('${a.id}')">✕</button>
+      </div></div>`).join('');
+}
+
+// AG
+async function addAG(){
+  const ti=document.getElementById('ag-ti').value.trim(),dt=document.getElementById('ag-dt').value;
+  if(!ti||!dt)return alert('Titre et date obligatoires !');
+  const row={id:gid(),titre:ti,date:dt,lieu:document.getElementById('ag-li').value.trim(),
+    participants:parseInt(document.getElementById('ag-pt').value)||0,cr:document.getElementById('ag-cr').value.trim()};
+  try{
+    showLoader('Enregistrement...');
+    await dbInsert('ags',row);
+    db.ags.unshift(row);
+    cM('ag-modal');document.getElementById('ag-ti').value='';document.getElementById('ag-cr').value='';document.getElementById('ag-pt').value='';
+    renderAG();
+  }catch(e){alert('Erreur: '+e.message);}finally{hideLoader();}
+}
+async function delAG(id){
+  if(!confirm('Supprimer ?'))return;
+  try{showLoader('Suppression...');await dbDelete('ags',id);db.ags=db.ags.filter(a=>a.id!==id);renderAG();}
+  catch(e){alert('Erreur: '+e.message);}finally{hideLoader();}
+}
+function renderAG(){
+  const el=document.getElementById('liste-ag');
+  if(!db.ags.length){el.innerHTML='<div class="empty"><div class="empty-icon">📋</div><p>Aucune AG.</p></div>';return;}
+  el.innerHTML=[...db.ags].reverse().map(a=>`
+    <div class="agc">
+      <div style="display:flex;justify-content:space-between">
+        <div><div style="font-weight:700;color:var(--bleu);font-size:0.88rem">${a.titre}</div>
+        <div style="font-size:0.7rem;color:var(--gris)">📅 ${fd(a.date)}${a.lieu?' · '+a.lieu:''}${a.participants?' · '+a.participants+' part.':''}</div></div>
+        <button class="btn btn-d" onclick="delAG('${a.id}')">✕</button>
+      </div>${a.cr?`<div class="agcr">${a.cr}</div>`:''}</div>`).join('');
+}
+
+// DASHBOARD
+function renderDash(){
+  document.getElementById('sm').textContent=db.membres.length;
+  document.getElementById('ss').textContent=db.seances.length;
+  document.getElementById('sc').textContent=solde().toLocaleString('fr-FR');
+  document.getElementById('vue-ens').innerHTML=`<div style="font-size:0.83rem;line-height:2.2">
+    <div>👥 <b>${db.membres.length}</b> membres</div><div>🎶 <b>${db.seances.length}</b> séances tenues</div>
+    <div>📅 <b>${db.activites.length}</b> activités planifiées</div><div>📋 <b>${db.ags.length}</b> AG enregistrées</div>
+    <div>💰 Solde : <b>${solde().toLocaleString('fr-FR')} FCFA</b></div></div>`;
+  const al=db.membres.filter(m=>m.absences>=2||m.retards>=3);
+  document.getElementById('alertes').innerHTML=al.length
+    ?al.map(m=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #f0f0f0;font-size:0.8rem">
+      <b>${m.nom}</b><div>${m.absences>=2?`<span class="badge b-abs">❌${m.absences}</span>`:''}${m.retards>=3?`<span class="badge b-ret">⏰${m.retards}</span>`:''}</div></div>`).join('')
+    :'<p style="font-size:0.82rem;color:var(--vert)">✅ Aucune alerte.</p>';
+  const today=new Date().toISOString().split('T')[0];
+  const p=[...db.activites].filter(a=>a.date>=today).sort((a,b)=>new Date(a.date)-new Date(b.date))[0];
+  document.getElementById('proch-act').innerHTML=p
+    ?`<b style="font-size:0.88rem">${p.titre}</b><br><span style="font-size:0.72rem;color:var(--gris)">📅 ${fd(p.date)}${p.heure?' · '+p.heure:''}${p.lieu?' · '+p.lieu:''}</span><br><span class="tbadge">${p.type}</span>`
+    :'<p style="font-size:0.82rem;color:var(--gris)">Aucune activité planifiée.</p>';
+}
+
+// ESPACE MEMBRE
+function renderEspace(){
+  if(memId){const m=db.membres.find(x=>x.id===memId);if(m){showProfil(m);return;}}
+  document.getElementById('zone-inscription').style.display='block';
+  document.getElementById('zone-profil').style.display='none';
+}
+
+async function inscrire(){
+  const nom=document.getElementById('ins-nom').value.trim();
+  const egl=document.getElementById('ins-eglise').value.trim();
+  const ct=document.getElementById('ins-contact').value.trim();
+  if(!nom||!egl||!ct)return alert('Nom, église et contact sont obligatoires !');
+  // Check if already exists
+  const exist=db.membres.find(m=>m.nom.toLowerCase()===nom.toLowerCase());
+  if(exist){memId=exist.id;showProfil(exist);return;}
+  const row={id:gid(),nom,eglise:egl,contact:ct,
+    sexe:document.getElementById('ins-sexe').value,
+    age:document.getElementById('ins-age').value,
+    exp:document.getElementById('ins-exp').value,
+    style:document.getElementById('ins-style').value,
+    motiv:document.getElementById('ins-motiv').value,
+    role:'Danseur/Danseuse',absences:0,retards:0,date_ajout:new Date().toISOString()};
+  try{
+    showLoader('Inscription en cours...');
+    await dbInsert('membres',row);
+    const nv={...row,dateAjout:row.date_ajout};
+    db.membres.push(nv);
+    memId=nv.id;
+    showProfil(nv);
+  }catch(e){alert('Erreur: '+e.message);}
+  finally{hideLoader();}
+}
+
+function showProfil(m){
+  document.getElementById('zone-inscription').style.display='none';
+  document.getElementById('zone-profil').style.display='block';
+  document.getElementById('p-av').textContent=ini(m.nom);
+  document.getElementById('p-nom').textContent=m.nom;
+  document.getElementById('p-egl').textContent=m.eglise||'';
+  document.getElementById('p-role').textContent=m.role||'Membre';
+  let infos='';
+  if(m.absences>=2)infos+=`<div class="alert-box">⚠️ ${m.absences} absence(s) non justifiée(s) — risque de sanction !</div>`;
+  infos+=`<div class="ir"><span class="il">Église</span><span class="iv">${m.eglise||'—'}</span></div>
+    <div class="ir"><span class="il">Contact</span><span class="iv">${m.contact||'—'}</span></div>
+    <div class="ir"><span class="il">Niveau</span><span class="iv">${m.exp||'—'}</span></div>
+    <div class="ir"><span class="il">Style</span><span class="iv">${m.style||'—'}</span></div>
+    <div class="ir"><span class="il">Absences</span><span class="iv" style="color:${m.absences>=2?'var(--rouge)':'var(--vert)'}">${m.absences}</span></div>
+    <div class="ir"><span class="il">Retards</span><span class="iv">${m.retards}</span></div>
+    <div class="ir"><span class="il">Membre depuis</span><span class="iv">${fd(m.dateAjout)}</span></div>`;
+  document.getElementById('p-infos').innerHTML=infos;
+  mTab('t-profil');
+}
+
+function mTab(tab){
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',['t-profil','t-seances','t-amendes'][i]===tab));
+  ['t-profil','t-seances','t-amendes'].forEach(id=>document.getElementById(id).style.display=id===tab?'block':'none');
+  if(tab==='t-seances')renderMesPres();
+  if(tab==='t-amendes')renderMesAm();
+}
+
+function renderMesPres(){
+  const m=db.membres.find(x=>x.id===memId);
+  const el=document.getElementById('m-pres');
+  if(!m){el.innerHTML='';return;}
+  const ms=db.seances.filter(s=>s.pointage&&s.pointage[m.id]);
+  if(!ms.length){el.innerHTML='<p style="font-size:0.82rem;color:var(--gris)">Aucune séance enregistrée.</p>';return;}
+  el.innerHTML=[...ms].reverse().map(s=>{
+    const pt=s.pointage[m.id],co=s.cotisations?.[m.id]||0;
+    const tag=pt==='absent'?'<span class="tag-a">❌ Absent</span>':pt==='retard'?'<span class="tag-r">⏰ Retard</span>':'<span class="tag-p">✅ Présent</span>';
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #f0f0f0;font-size:0.82rem">
+      <span>📅 ${fd(s.date)}</span><div style="display:flex;gap:8px;align-items:center">${tag}${co>0?`<span style="color:var(--vert);font-weight:600">${co.toLocaleString('fr-FR')} F</span>`:''}</div></div>`;
+  }).join('');
+}
+
+function renderMesAm(){
+  const m=db.membres.find(x=>x.id===memId);
+  const el=document.getElementById('m-am');
+  if(!m){el.innerHTML='';return;}
+  const am=db.transactions.filter(t=>t.type==='amende'&&t.membreId===m.id);
+  let h='';
+  if(m.absences>=2)h+=`<div class="alert-box">❌ ${m.absences} absence(s) → amende à régulariser</div>`;
+  if(m.retards>=3)h+=`<div class="alert-box">⏰ ${m.retards} retard(s) → amende à régulariser</div>`;
+  if(am.length)h+=am.map(a=>`<div class="tx"><div class="ti"><div class="td">⚠️ ${a.desc}</div><div class="tdt">${fd(a.date)}</div></div><div class="tm t-out">${a.montant.toLocaleString('fr-FR')} F</div></div>`).join('');
+  if(!h)h='<div class="ok-box">✅ Aucune amende. Continuez comme ça !</div>';
+  el.innerHTML=h;
+}
+
+
+// ─── SPLASH ───
+function initSplash(){
+  const splash=document.getElementById('splash');
+  setTimeout(()=>{
+    splash.classList.add('hide');
+    setTimeout(()=>splash.style.display='none',500);
+  },2400);
+}
+
+// ─── THEME ───
+function toggleTheme(){
+  const cur=document.documentElement.getAttribute('data-theme');
+  const next=cur==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  localStorage.setItem('eead_theme',next);
+  // sync both toggles
+  ['theme-btn','theme-btn2'].forEach(id=>{
+    const btn=document.getElementById(id);
+    if(btn) btn.title=next==='dark'?'Mode clair':'Mode sombre';
+  });
+  // update header color meta
+  document.querySelector('meta[name="theme-color"]').content=next==='dark'?'#0a0d10':'#f0f4ed';
+}
+function loadTheme(){
+  const t=localStorage.getItem('eead_theme')||'light';
+  document.documentElement.setAttribute('data-theme',t);
+}
+
+// ─── CHANGE CODES ───
+function changeCode(type){
+  const oldVal=document.getElementById('old-'+type+'-code').value;
+  const newVal=document.getElementById('new-'+type+'-code').value;
+  const confirm=document.getElementById('confirm-'+type+'-code').value;
+  const current=type==='admin'?ADMIN_CODE:MEMBRE_CODE;
+  if(oldVal!==current){alert('❌ Ancien code incorrect !');return;}
+  if(!newVal||newVal.length<6){alert('⚠️ Le nouveau code doit faire au moins 6 caractères !');return;}
+  if(newVal!==confirm){alert('❌ Les deux nouveaux codes ne correspondent pas !');return;}
+  if(type==='admin') ADMIN_CODE=newVal;
+  else MEMBRE_CODE=newVal;
+  // Save codes in localStorage
+  localStorage.setItem('eead_admin_code',ADMIN_CODE);
+  localStorage.setItem('eead_membre_code',MEMBRE_CODE);
+  document.getElementById('old-'+type+'-code').value='';
+  document.getElementById('new-'+type+'-code').value='';
+  document.getElementById('confirm-'+type+'-code').value='';
+  alert('✅ Code '+type+' mis à jour avec succès !');
+}
+function loadCodes(){
+  const a=localStorage.getItem('eead_admin_code');
+  const m=localStorage.getItem('eead_membre_code');
+  if(a) ADMIN_CODE=a;
+  if(m) MEMBRE_CODE=m;
+}
+
+// ─── SETTINGS RENDER ───
+function renderSettings(){}
+
+// ─── DONUT CHART (SVG) ───
+function makeDonut(pres,ret,abs,size=100){
+  const total=pres+ret+abs||1;
+  const r=38,cx=50,cy=50,stroke=14;
+  const circ=2*Math.PI*r;
+  function arc(val,offset,color){
+    const dash=(val/total)*circ;
+    return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${color}" stroke-width="${stroke}"
+      stroke-dasharray="${dash} ${circ-dash}" stroke-dashoffset="${-offset*(circ/total)}"
+      stroke-linecap="round" transform="rotate(-90 ${cx} ${cy})" style="transition:stroke-dasharray 0.8s"/>`;
+  }
+  const presOff=0,retOff=pres,absOff=pres+ret;
+  return `<svg width="${size}" height="${size}" viewBox="0 0 100 100">
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--bg2)" stroke-width="${stroke}"/>
+    ${arc(pres,presOff,'var(--vert)')}
+    ${arc(ret,retOff,'var(--or)')}
+    ${arc(abs,absOff,'var(--rouge)')}
+    <text x="${cx}" y="${cy+1}" text-anchor="middle" dominant-baseline="middle"
+      style="font-family:Instrument Serif,serif;font-size:16px;fill:var(--txt);font-weight:700">
+      ${total>0?Math.round((pres/total)*100):0}%
+    </text>
+  </svg>`;
+}
+
+// ─── BILAN with donut + comparison ───
+function updateRpPeriod(){
+  const t=document.getElementById('rp-type').value;
+  document.getElementById('rp-month-group').style.display=t==='month'?'block':'none';
+}
+function getRpLabel(){
+  const t=document.getElementById('rp-type').value;
+  const y=document.getElementById('rp-year').value;
+  const mois=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  return t==='month'?mois[parseInt(document.getElementById('rp-month').value)]+' '+y:'Année '+y;
+}
+function getBilanData(){
+  const t=document.getElementById('rp-type').value;
+  const y=parseInt(document.getElementById('rp-year').value);
+  const m=parseInt(document.getElementById('rp-month').value);
+  function inPeriod(dateStr){
+    const d=new Date(dateStr+'T12:00:00');
+    return t==='month'?(d.getFullYear()===y&&d.getMonth()===m):(d.getFullYear()===y);
+  }
+  const seances=db.seances.filter(s=>inPeriod(s.date));
+  const trans=db.transactions.filter(t=>inPeriod(t.date));
+  const acts=db.activites.filter(a=>inPeriod(a.date));
+  const ags=db.ags.filter(a=>inPeriod(a.date));
+  let totalSlots=0,totalPres=0,totalRet=0,totalAbs=0;
+  const presParMembre={};
+  db.membres.forEach(mb=>{presParMembre[mb.id]={pres:0,ret:0,abs:0,tot:0};});
+  seances.forEach(s=>{
+    Object.entries(s.pointage).forEach(([id,p])=>{
+      totalSlots++;
+      if(p==='present'){totalPres++;if(presParMembre[id])presParMembre[id].pres++;}
+      else if(p==='retard'){totalRet++;if(presParMembre[id])presParMembre[id].ret++;}
+      else{totalAbs++;if(presParMembre[id])presParMembre[id].abs++;}
+      if(presParMembre[id])presParMembre[id].tot++;
+    });
+  });
+  const txPres=totalSlots>0?Math.round((totalPres/totalSlots)*100):0;
+  const recettes=trans.filter(t=>t.type!=='sortie').reduce((a,t)=>a+t.montant,0);
+  const depenses=trans.filter(t=>t.type==='sortie').reduce((a,t)=>a+t.montant,0);
+  const cotis=trans.filter(t=>t.type==='cotisation').reduce((a,t)=>a+t.montant,0);
+  const amendes=trans.filter(t=>t.type==='amende').reduce((a,t)=>a+t.montant,0);
+  const dons=trans.filter(t=>t.type==='don').reduce((a,t)=>a+t.montant,0);
+  return {seances,trans,acts,ags,totalSlots,totalPres,totalRet,totalAbs,txPres,presParMembre,recettes,depenses,cotis,amendes,dons};
+}
+
+function renderBilan(){
+  const el=document.getElementById('bilan-content');
+  const label=getRpLabel();
+  const d=getBilanData();
+  const moisNoms=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
+
+  // Comparaison: 12 derniers mois
+  const now=new Date();
+  const compMois=[];
+  for(let i=11;i>=0;i--){
+    const d2=new Date(now.getFullYear(),now.getMonth()-i,1);
+    const y2=d2.getFullYear(),m2=d2.getMonth();
+    const sM=db.seances.filter(s=>{const dd=new Date(s.date+'T12:00:00');return dd.getFullYear()===y2&&dd.getMonth()===m2;});
+    const tM=db.transactions.filter(t=>{const dd=new Date(t.date+'T12:00:00');return dd.getFullYear()===y2&&dd.getMonth()===m2;});
+    let slots=0,pres=0;
+    sM.forEach(s=>{Object.values(s.pointage).forEach(p=>{slots++;if(p==='present')pres++;});});
+    const tx=slots>0?Math.round((pres/slots)*100):0;
+    const rec=tM.filter(t=>t.type!=='sortie').reduce((a,t)=>a+t.montant,0);
+    const dep=tM.filter(t=>t.type==='sortie').reduce((a,t)=>a+t.montant,0);
+    compMois.push({label:moisNoms[m2],tx,seances:sM.length,rec,dep,solde:rec-dep});
+  }
+  const maxTx=Math.max(...compMois.map(m=>m.tx),1);
+  const maxRec=Math.max(...compMois.map(m=>Math.max(m.rec,m.dep)),1);
+
+  el.innerHTML=`
+    <div id="rapport-zone">
+    <!-- En-tête rapport -->
+    <div style="background:var(--txt);border-radius:22px;padding:18px;margin-bottom:14px;color:#fff;text-align:center;position:relative;overflow:hidden">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 30%,rgba(255,255,255,0.08),transparent 60%);pointer-events:none"></div>
+      <div style="font-size:0.62rem;letter-spacing:3px;opacity:0.6;text-transform:uppercase">GROUPE DE DANSE · JAD EEAD</div>
+      <div style="font-family:'Instrument Serif',serif;font-size:1.5rem;margin:4px 0">Bilan ${label}</div>
+      <div style="font-size:0.65rem;opacity:0.5">Généré le ${new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'})}</div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+      <div class="kpi k-bleu"><div class="k-val">${d.seances.length}</div><div class="k-lbl">Séances</div></div>
+      <div class="kpi k-vert"><div class="k-val">${d.txPres}%</div><div class="k-lbl">Présence</div></div>
+      <div class="kpi k-or"><div class="k-val">${(d.recettes/1000).toFixed(0)}k</div><div class="k-lbl">Recettes F</div></div>
+      <div class="kpi k-rouge"><div class="k-val">${(d.depenses/1000).toFixed(0)}k</div><div class="k-lbl">Dépenses F</div></div>
+    </div>
+
+    <!-- Donut présences -->
+    <div class="card">
+      <div class="card-title">🎯 Répartition présences</div>
+      ${d.totalSlots===0?'<p style="font-size:0.82rem;color:var(--txt2)">Aucune donnée sur cette période.</p>':`
+      <div class="donut-wrap">
+        ${makeDonut(d.totalPres,d.totalRet,d.totalAbs,120)}
+        <div class="donut-legend">
+          <div class="donut-item"><div class="donut-dot" style="background:var(--vert)"></div><span style="flex:1">Présents</span><b>${d.totalPres} (${d.totalSlots>0?Math.round((d.totalPres/d.totalSlots)*100):0}%)</b></div>
+          <div class="donut-item"><div class="donut-dot" style="background:var(--or)"></div><span style="flex:1">Retards</span><b>${d.totalRet} (${d.totalSlots>0?Math.round((d.totalRet/d.totalSlots)*100):0}%)</b></div>
+          <div class="donut-item"><div class="donut-dot" style="background:var(--rouge)"></div><span style="flex:1">Absences</span><b>${d.totalAbs} (${d.totalSlots>0?Math.round((d.totalAbs/d.totalSlots)*100):0}%)</b></div>
+        </div>
+      </div>`}
+    </div>
+
+    <!-- Comparaison 12 mois - Présences -->
+    <div class="card">
+      <div class="card-title">📈 Présences — 12 derniers mois</div>
+      <div style="display:flex;align-items:flex-end;gap:3px;height:90px;padding:0 2px;margin-bottom:8px">
+        ${compMois.map((m,i)=>`
+          <div class="month-col" title="${m.label}: ${m.tx}%">
+            <div class="month-num" style="font-size:0.55rem">${m.tx>0?m.tx+'%':''}</div>
+            <div class="month-bar" style="height:${m.tx>0?Math.round((m.tx/maxTx)*58)+4:4}px;opacity:${m.seances>0?1:0.2}"></div>
+            <div class="month-lbl">${m.label}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+
+    <!-- Comparaison 12 mois - Finances -->
+    <div class="card">
+      <div class="card-title">💰 Finances — 12 derniers mois</div>
+      <div style="display:flex;align-items:flex-end;gap:3px;height:90px;padding:0 2px;margin-bottom:8px">
+        ${compMois.map(m=>`
+          <div class="month-col" style="position:relative" title="${m.label}: +${m.rec.toLocaleString('fr-FR')} / -${m.dep.toLocaleString('fr-FR')}">
+            <div style="display:flex;align-items:flex-end;gap:1px;height:60px;position:relative">
+              <div style="width:45%;background:var(--vert);border-radius:3px 3px 0 0;height:${m.rec>0?Math.round((m.rec/maxRec)*56)+4:4}px;opacity:0.8;min-height:4px;transition:height 0.6s"></div>
+              <div style="width:45%;background:var(--rouge);border-radius:3px 3px 0 0;height:${m.dep>0?Math.round((m.dep/maxRec)*56)+4:4}px;opacity:0.8;min-height:4px;transition:height 0.6s"></div>
+            </div>
+            <div class="month-lbl">${m.label}</div>
+          </div>`).join('')}
+      </div>
+      <div style="display:flex;gap:14px;font-size:0.72rem;margin-top:4px">
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:10px;height:10px;border-radius:2px;background:var(--vert)"></div>Recettes</div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:10px;height:10px;border-radius:2px;background:var(--rouge)"></div>Dépenses</div>
+      </div>
+    </div>
+
+    <!-- Présences membres -->
+    <div class="card">
+      <div class="card-title">🏆 Assiduité par membre</div>
+      ${db.membres.length===0?'<p style="font-size:0.82rem;color:var(--txt2)">Aucun membre.</p>':
+        db.membres.map(mb=>{
+          const pr=d.presParMembre[mb.id]||{pres:0,ret:0,abs:0,tot:0};
+          const tx=pr.tot>0?Math.round((pr.pres/pr.tot)*100):0;
+          const col=tx>=80?'var(--vert)':tx>=50?'var(--or)':'var(--rouge)';
+          return `<div class="bar-row">
+            <div class="bar-label">${mb.nom}</div>
+            <div class="bar-track"><div class="bar-fill" style="width:${tx}%;background:${col}"></div></div>
+            <div class="bar-val" style="color:${col}">${tx}%</div>
+          </div>`;
+        }).join('')}
+    </div>
+
+    <!-- Absents -->
+    ${d.totalAbs>0?`
+    <div class="card">
+      <div class="card-title">⚠️ Absences & Retards</div>
+      ${db.membres.filter(mb=>{const pr=d.presParMembre[mb.id];return pr&&(pr.abs>0||pr.ret>0);}).map(mb=>{
+        const pr=d.presParMembre[mb.id];
+        return `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border2);font-size:0.82rem">
+          <span><b>${mb.nom}</b> <span style="font-size:0.68rem;color:var(--txt2)">${mb.eglise||''}</span></span>
+          <div>${pr.abs>0?`<span class="badge b-abs">❌${pr.abs}</span>`:''}${pr.ret>0?`<span class="badge b-ret">⏰${pr.ret}</span>`:''}</div>
+        </div>`;
+      }).join('')}
+    </div>`:''}
+
+    <!-- Finances détail -->
+    <div class="card">
+      <div class="card-title">💰 Bilan financier</div>
+      <div style="display:flex;gap:8px;margin-bottom:14px">
+        <div style="flex:1;background:var(--vert-light);border-radius:14px;padding:12px;text-align:center">
+          <div style="font-family:'Instrument Serif',serif;font-size:1.5rem;color:var(--vert)">${d.recettes.toLocaleString('fr-FR')}</div>
+          <div style="font-size:0.62rem;color:var(--vert);font-weight:700;text-transform:uppercase;letter-spacing:1px">Recettes</div>
+        </div>
+        <div style="flex:1;background:var(--rouge-light);border-radius:14px;padding:12px;text-align:center">
+          <div style="font-family:'Instrument Serif',serif;font-size:1.5rem;color:var(--rouge)">${d.depenses.toLocaleString('fr-FR')}</div>
+          <div style="font-size:0.62rem;color:var(--rouge);font-weight:700;text-transform:uppercase;letter-spacing:1px">Dépenses</div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border2);font-size:0.82rem"><span>💚 Cotisations</span><b>${d.cotis.toLocaleString('fr-FR')} F</b></div>
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border2);font-size:0.82rem"><span>⚠️ Amendes</span><b>${d.amendes.toLocaleString('fr-FR')} F</b></div>
+      <div style="display:flex;justify-content:space-between;padding:8px 0;font-size:0.88rem;font-weight:800;color:${(d.recettes-d.depenses)>=0?'var(--vert)':'var(--rouge)'}">
+        <span>Solde période</span><span>${(d.recettes-d.depenses).toLocaleString('fr-FR')} FCFA</span>
+      </div>
+    </div>
+
+    <!-- Activités -->
+    ${d.acts.length>0?`
+    <div class="card">
+      <div class="card-title">📅 Activités (${d.acts.length})</div>
+      ${d.acts.map(a=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border2);font-size:0.82rem">
+        <div><b>${a.titre}</b>${a.lieu?` · <span style="color:var(--txt2)">${a.lieu}</span>`:''}</div>
+        <div style="display:flex;gap:6px;align-items:center"><span class="tbadge">${a.type}</span><span style="font-size:0.68rem;color:var(--txt2)">${fd(a.date)}</span></div>
+      </div>`).join('')}
+    </div>`:''}
+
+    <!-- Séances -->
+    <div class="card">
+      <div class="card-title">🎶 Séances tenues (${d.seances.length})</div>
+      ${d.seances.length===0?'<p style="font-size:0.82rem;color:var(--txt2)">Aucune séance.</p>':
+        d.seances.map(s=>{
+          const abs=Object.values(s.pointage).filter(p=>p==='absent').length;
+          const ret=Object.values(s.pointage).filter(p=>p==='retard').length;
+          const pres=Object.values(s.pointage).length-abs-ret;
+          const cot=Object.values(s.cotisations||{}).reduce((a,v)=>a+(parseFloat(v)||0),0);
+          return `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border2);font-size:0.8rem">
+            <div><b>${fd(s.date)}</b>${s.lieu?` · <span style="color:var(--txt2)">${s.lieu}</span>`:''}</div>
+            <div style="display:flex;gap:6px;font-size:0.72rem">
+              <span style="color:var(--vert)">✅${pres}</span>
+              <span style="color:var(--or)">⏰${ret}</span>
+              <span style="color:var(--rouge)">❌${abs}</span>
+              <span style="color:var(--bleu);font-weight:700">${cot.toLocaleString('fr-FR')}F</span>
+            </div></div>`;
+        }).join('')}
+    </div>
+
+    <!-- Signature -->
+    <div style="background:var(--bg4);border-radius:16px;padding:16px;text-align:center;margin-top:4px">
+      <div style="font-size:0.72rem;color:var(--txt2)">Rapport généré par l'application de gestion</div>
+      <div style="font-size:0.82rem;font-weight:700;color:var(--txt);margin-top:4px">Groupe de Danse · JAD EEAD Section</div>
+    </div>
+    </div>
+  `;
+}
+
+function exportPDF(){
+  renderBilan();
+  const label=getRpLabel();
+  const zone=document.getElementById('rapport-zone');
+  if(!zone)return;
+  const isDark=document.documentElement.getAttribute('data-theme')==='dark';
+  const w=window.open('','_blank');
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8">
+    <title>Bilan ${label}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+      *{margin:0;padding:0;box-sizing:border-box;}
+      body{font-family:'Bricolage Grotesque',sans-serif;color:#0f1a14;padding:20px;max-width:680px;margin:0 auto;background:#f0f4ed;}
+      .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;}
+      .kpi{border:1px solid #ddd;border-radius:12px;padding:10px;text-align:center;background:#fff;}
+      .k-val{font-family:'Instrument Serif',serif;font-size:1.4rem;}
+      .k-lbl{font-size:0.6rem;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-top:3px;}
+      .k-vert .k-val{color:#1e8a4a;}.k-bleu .k-val{color:#2563b0;}.k-or .k-val{color:#c8962a;}.k-rouge .k-val{color:#c0392b;}
+      .card{border:1px solid #e0e0e0;border-radius:14px;padding:14px;margin-bottom:12px;background:#fff;}
+      .card-title{font-family:'Instrument Serif',serif;font-size:1rem;color:#0f1a14;margin-bottom:10px;padding-bottom:6px;border-bottom:1.5px solid #e0e0e0;display:flex;align-items:center;gap:6px;}
+      .card-title::after{content:'';flex:1;height:1px;background:#e0e0e0;}
+      .bar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+      .bar-label{font-size:0.72rem;font-weight:600;width:120px;flex-shrink:0;}
+      .bar-track{flex:1;background:#f0f0f0;border-radius:8px;height:10px;overflow:hidden;}
+      .bar-fill{height:100%;border-radius:8px;}
+      .badge{font-size:0.6rem;padding:2px 7px;border-radius:12px;font-weight:700;display:inline-block;margin-right:3px;}
+      .b-abs{background:#fde8e8;color:#c0392b;}.b-ret{background:#fef3cd;color:#856404;}
+      .tbadge{display:inline-block;font-size:0.6rem;padding:2px 8px;border-radius:12px;font-weight:700;background:#dbeafe;color:#2563b0;}
+      .donut-wrap{display:flex;align-items:center;gap:16px;}
+      .donut-legend{display:flex;flex-direction:column;gap:6px;flex:1;}
+      .donut-item{display:flex;align-items:center;gap:7px;font-size:0.76rem;}
+      .donut-dot{width:9px;height:9px;border-radius:50%;}
+      @media print{body{padding:10px;}}
+    </style>
+</head><body>${zone.innerHTML}</body></html>`);
+  w.document.close();
+  setTimeout(()=>w.print(),800);
+}
+
+function exportWord(){
+  renderBilan();
+  const label=getRpLabel();
+  const d=getBilanData();
+  let html=`<html><head><meta charset="UTF-8"><style>
+    body{font-family:Arial,sans-serif;font-size:11pt;margin:2cm;}
+    h1{color:#2a5c3f;font-size:16pt;text-align:center;border-bottom:3px solid #c8962a;padding-bottom:8px;}
+    h2{color:#2a5c3f;font-size:12pt;margin:16px 0 6px;border-left:4px solid #c8962a;padding-left:8px;}
+    .sub{text-align:center;color:#888;font-size:9pt;margin-bottom:20px;}
+    table{width:100%;border-collapse:collapse;margin-bottom:12px;font-size:10pt;}
+    th{background:#2a5c3f;color:#fff;padding:7px;text-align:left;}
+    td{padding:6px 8px;border-bottom:1px solid #eee;}
+    tr:nth-child(even)td{background:#f8f8f8;}
+    .sig{margin-top:30px;display:flex;justify-content:space-between;}
+    .sig-box{width:200px;border-top:1px solid #222;text-align:center;padding-top:6px;font-size:9pt;}
+    .footer{margin-top:20px;text-align:center;color:#888;font-size:9pt;border-top:1px solid #ddd;padding-top:10px;}
+  </style>
+</head><body>
+  <h1>BILAN ${label.toUpperCase()}</h1>
+  <div class="sub">Groupe de Danse — JAD EEAD Section<br>
+  Généré le ${new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'})}</div>
+  <h2>1. Résumé général</h2>
+  <table><tr><th>Indicateur</th><th>Valeur</th></tr>
+    <tr><td>Séances tenues</td><td><b>${d.seances.length}</b></td></tr>
+    <tr><td>Taux de présence global</td><td><b>${d.txPres}%</b></td></tr>
+    <tr><td>Total présences</td><td>${d.totalPres}</td></tr>
+    <tr><td>Total retards</td><td>${d.totalRet}</td></tr>
+    <tr><td>Total absences</td><td>${d.totalAbs}</td></tr>
+  </table>
+  <h2>2. Présences par membre</h2>
+  <table><tr><th>Membre</th><th>Église</th><th>Présences</th><th>Retards</th><th>Absences</th><th>Taux</th></tr>
+  ${db.membres.map(mb=>{const pr=d.presParMembre[mb.id]||{pres:0,ret:0,abs:0,tot:0};const tx=pr.tot>0?Math.round((pr.pres/pr.tot)*100):0;
+    return `<tr><td>${mb.nom}</td><td>${mb.eglise||'—'}</td><td>${pr.pres}</td><td>${pr.ret}</td><td>${pr.abs}</td><td><b>${tx}%</b></td></tr>`;}).join('')}
+  </table>
+  <h2>3. Bilan financier</h2>
+  <table><tr><th>Poste</th><th>Montant (FCFA)</th></tr>
+    <tr><td>Cotisations</td><td><b>${d.cotis.toLocaleString('fr-FR')}</b></td></tr>
+    <tr><td>Amendes</td><td><b>${d.amendes.toLocaleString('fr-FR')}</b></td></tr>
+    <tr><td>Dons</td><td><b>${d.dons.toLocaleString('fr-FR')}</b></td></tr>
+    <tr style="background:#d5f5e3"><td><b>TOTAL RECETTES</b></td><td><b>${d.recettes.toLocaleString('fr-FR')}</b></td></tr>
+    <tr><td>Dépenses</td><td><b>${d.depenses.toLocaleString('fr-FR')}</b></td></tr>
+    <tr style="background:#2a5c3f;color:white"><td><b>SOLDE PÉRIODE</b></td><td><b>${(d.recettes-d.depenses).toLocaleString('fr-FR')}</b></td></tr>
+  </table>
+  ${d.acts.length>0?`<h2>4. Activités</h2><table><tr><th>Activité</th><th>Type</th><th>Date</th><th>Lieu</th></tr>
+  ${d.acts.map(a=>`<tr><td>${a.titre}</td><td>${a.type}</td><td>${fd(a.date)}</td><td>${a.lieu||'—'}</td></tr>`).join('')}</table>`:''}
+  <div class="sig">
+    <div class="sig-box">Le/La Président(e)<br><br><br>Nom :_______________</div>
+    <div class="sig-box">Le/La Secrétaire<br><br><br>Nom :_______________</div>
+  </div>
+  <div class="footer">Groupe de Danse · JAD EEAD Section</div>
+  </body></html>`;
+  const blob=new Blob([html],{type:'application/msword'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download=`Bilan_${label.replace(' ','_')}_EEAD.doc`;a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ─── PWA ───
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',(e)=>{
+  e.preventDefault();deferredPrompt=e;
+  const btn=document.getElementById('pwa-install-btn');
+  if(btn)btn.style.display='block';
+});
+function installPWA(){
+  if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>{deferredPrompt=null;});}
+}
+
+// ─── INIT ───
+async function initApp(){
+  loadTheme();
+  loadCodes();
+  initSplash();
+  await load();
+}
+
+// INIT
+initApp();
+</script>
+</body>
+</html>
